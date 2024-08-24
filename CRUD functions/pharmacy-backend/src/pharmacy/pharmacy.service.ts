@@ -26,6 +26,6 @@ export class PharmacyService {
   }
 
   async delete(id: string): Promise<any> {
-    return this.pharmacyModel.findByIdAndRemove(id).exec();
+    return this.pharmacyModel.findOneAndDelete({ _id: id }).exec();
   }
 }
