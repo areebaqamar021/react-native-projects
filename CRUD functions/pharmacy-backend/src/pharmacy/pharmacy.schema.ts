@@ -5,5 +5,5 @@ export const PharmacySchema = new Schema({
   address: { type: String, required: true },
   city: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  dateOfEstablishment: { type: Date, required: true },
+  dateOfEstablishment: { type: Date, required: true }
 });

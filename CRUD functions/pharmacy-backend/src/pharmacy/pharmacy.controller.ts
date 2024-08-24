@@ -1,32 +1,33 @@
-import { Controller, Post, Get, Put, Delete, Param, Body } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { PharmacyService } from './pharmacy.service';
+import { CreatePharmacyDto } from './dto/create-pharmacy.dto';
 
 @Controller('pharmacy')
 export class PharmacyController {
   constructor(private readonly pharmacyService: PharmacyService) {}
 
   @Post()
-  async create(@Body() pharmacyDto: any) {
-    return await this.pharmacyService.create(pharmacyDto);
+  async create(@Body() createPharmacyDto: CreatePharmacyDto) {
+    return this.pharmacyService.create(createPharmacyDto);
   }
 
   @Get()
   async findAll() {
-    return await this.pharmacyService.findAll();
+    return this.pharmacyService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.pharmacyService.findOne(id);
+    return this.pharmacyService.findOne(id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() pharmacyDto: any) {
-    return await this.pharmacyService.update(id, pharmacyDto);
+  async update(@Param('id') id: string, @Body() updatePharmacyDto: CreatePharmacyDto) {
+    return this.pharmacyService.update(id, updatePharmacyDto);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return await this.pharmacyService.delete(id);
+    return this.pharmacyService.delete(id);
   }
 }
