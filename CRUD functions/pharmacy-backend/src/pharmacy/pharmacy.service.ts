@@ -1,14 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreatePharmacyDto } from './dto/create-pharmacy.dto';
-import { Pharmacy } from './pharmacy.interface';
+import { Pharmacy, PharmacyDocument } from './pharmacy.schema';
 
 @Injectable()
 export class PharmacyService {
-  constructor(@InjectModel('Pharmacy') private readonly pharmacyModel: Model<Pharmacy>) {}
+  delete(id: string) {
+    throw new Error('Method not implemented.');
+  }
+  constructor(
+    @InjectModel(Pharmacy.name) private pharmacyModel: Model<PharmacyDocument>,
+  ) {}
 
-  async create(createPharmacyDto: CreatePharmacyDto): Promise<Pharmacy> {
+  async create(createPharmacyDto: any): Promise<Pharmacy> {
     const createdPharmacy = new this.pharmacyModel(createPharmacyDto);
     return createdPharmacy.save();
   }
@@ -18,14 +22,28 @@ export class PharmacyService {
   }
 
   async findOne(id: string): Promise<Pharmacy> {
-    return this.pharmacyModel.findById(id).exec();
+    const pharmacy = await this.pharmacyModel.findById(id).exec();
+    if (!pharmacy) {
+      throw new NotFoundException('Pharmacy not found');
+    }
+    return pharmacy;
   }
 
-  async update(id: string, updatePharmacyDto: CreatePharmacyDto): Promise<Pharmacy> {
-    return this.pharmacyModel.findByIdAndUpdate(id, updatePharmacyDto, { new: true }).exec();
+  async update(id: string, updatePharmacyDto: any): Promise<Pharmacy> {
+    const updatedPharmacy = await this.pharmacyModel
+      .findByIdAndUpdate(id, updatePharmacyDto, { new: true })
+      .exec();
+    if (!updatedPharmacy) {
+      throw new NotFoundException('Pharmacy not found');
+    }
+    return updatedPharmacy;
   }
 
-  async delete(id: string): Promise<any> {
-    return this.pharmacyModel.findOneAndDelete({ _id: id }).exec();
+  async remove(id: string): Promise<any> {
+    const deletedPharmacy = await this.pharmacyModel.findOneAndDelete({ _id: id }).exec();
+    if (!deletedPharmacy) {
+      throw new NotFoundException('Pharmacy not found');
+    }
+    return deletedPharmacy;
   }
 }
