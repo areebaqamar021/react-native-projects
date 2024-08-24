@@ -1,9 +1,24 @@
-import { Schema } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export const PharmacySchema = new Schema({
-  name: { type: String, required: true },
-  address: { type: String, required: true },
-  city: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  dateOfEstablishment: { type: Date, required: true }
-});
+export type PharmacyDocument = Pharmacy & Document;
+
+@Schema()
+export class Pharmacy {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop({ required: true })
+  address: string;
+
+  @Prop({ required: true })
+  city: string;
+
+  @Prop({ required: true, unique: true, match: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })
+  email: string;
+
+  @Prop({ required: true })
+  dateOfEstablishment: Date;
+}
+
+export const PharmacySchema = SchemaFactory.createForClass(Pharmacy);
