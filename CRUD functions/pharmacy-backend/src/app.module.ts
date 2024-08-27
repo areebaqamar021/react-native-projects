@@ -4,7 +4,7 @@ import { PharmacyModule } from './pharmacy/pharmacy.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://areebaqamar:649tQoAoSKDeDror@cluster0.eav98.mongodb.net/pharmacyDB?retryWrites=true&w=majority'),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     PharmacyModule,
   ],
 })
