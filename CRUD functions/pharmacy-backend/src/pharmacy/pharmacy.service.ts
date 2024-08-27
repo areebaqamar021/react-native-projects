@@ -5,9 +5,6 @@ import { Pharmacy, PharmacyDocument } from './pharmacy.schema';
 
 @Injectable()
 export class PharmacyService {
-  delete(id: string) {
-    throw new Error('Method not implemented.');
-  }
   constructor(
     @InjectModel(Pharmacy.name) private pharmacyModel: Model<PharmacyDocument>,
   ) {}
