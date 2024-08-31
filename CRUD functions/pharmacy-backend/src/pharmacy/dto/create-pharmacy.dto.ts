@@ -1,18 +1,18 @@
-import { IsEmail, IsNotEmpty, IsDateString } from 'class-validator';
+import { IsString, IsEmail, IsDateString } from 'class-validator';
 
 export class CreatePharmacyDto {
-  @IsNotEmpty()
-  name: string;
+  @IsString()
+  readonly name: string;
 
-  @IsNotEmpty()
-  address: string;
+  @IsString()
+  readonly address: string;
 
-  @IsNotEmpty()
-  city: string;
+  @IsString()
+  readonly city: string;
 
   @IsEmail()
-  email: string;
+  readonly email: string;
 
   @IsDateString()
-  dateOfEstablishment: string;
+  readonly dateOfEstablishment: string;
 }
