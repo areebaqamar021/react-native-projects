@@ -9,16 +9,16 @@ export class PharmacyService {
     @InjectModel(Pharmacy.name) private pharmacyModel: Model<PharmacyDocument>,
   ) {}
 
-  async create(createPharmacyDto: any): Promise<Pharmacy> {
+  async create(createPharmacyDto: any) {
     const createdPharmacy = new this.pharmacyModel(createPharmacyDto);
     return createdPharmacy.save();
   }
 
-  async findAll(): Promise<Pharmacy[]> {
+  async findAll() {
     return this.pharmacyModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Pharmacy> {
+  async findOne(id: string) {
     const pharmacy = await this.pharmacyModel.findById(id).exec();
     if (!pharmacy) {
       throw new NotFoundException('Pharmacy not found');
@@ -26,7 +26,7 @@ export class PharmacyService {
     return pharmacy;
   }
 
-  async update(id: string, updatePharmacyDto: any): Promise<Pharmacy> {
+  async update(id: string, updatePharmacyDto: any) {
     const updatedPharmacy = await this.pharmacyModel
       .findByIdAndUpdate(id, updatePharmacyDto, { new: true })
       .exec();
@@ -36,7 +36,7 @@ export class PharmacyService {
     return updatedPharmacy;
   }
 
-  async remove(id: string): Promise<any> {
+  async remove(id: string) {
     const deletedPharmacy = await this.pharmacyModel.findOneAndDelete({ _id: id }).exec();
     if (!deletedPharmacy) {
       throw new NotFoundException('Pharmacy not found');
