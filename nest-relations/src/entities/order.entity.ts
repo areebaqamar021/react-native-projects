@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, ManyToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Product } from './product.entity';
 
@@ -7,13 +7,25 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  totalAmount: number;
-
-  @ManyToOne(() => User, (user) => user.orders)
+  @ManyToOne(() => User, user => user.orders)
   user: User;
 
-  @ManyToMany(() => Product)
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  orderDate: Date;
+
+  @Column({ type: 'decimal' })
+  totalAmount: number;
+
+  @Column()
+  status: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToMany(() => Product, product => product.orders)
   @JoinTable()
   products: Product[];
 }

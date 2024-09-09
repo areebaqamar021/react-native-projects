@@ -1,21 +1,33 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, ManyToOne } from 'typeorm';
-import { Order } from './order.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany } from 'typeorm';
 import { Category } from './category.entity';
+import { Order } from './order.entity';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  name: string;
+  @ManyToOne(() => Category, category => category.products)
+  category: Category;
 
   @Column()
+  productName: string;
+
+  @Column('text')
+  description: string;
+
+  @Column({ type: 'decimal' })
   price: number;
 
-  @ManyToMany(() => Order, (order) => order.products)
-  orders: Order[];
+  @Column({ type: 'int' })
+  stockQuantity: number;
 
-  @ManyToOne(() => Category, (category) => category.products)
-  category: Category;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
+
+  @ManyToMany(() => Order, order => order.products)
+  orders: Order[];
 }
