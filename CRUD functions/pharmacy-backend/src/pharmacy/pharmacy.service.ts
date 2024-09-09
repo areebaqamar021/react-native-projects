@@ -1,46 +1,62 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Pharmacy, PharmacyDocument } from './pharmacy.schema';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Pharmacy } from './pharmacy.entity';
+import { CreatePharmacyDto } from './dto/create-pharmacy.dto'; 
+import { UpdatePharmacyDto } from './dto/update-pharmacy.dto'; 
 
 @Injectable()
 export class PharmacyService {
   constructor(
-    @InjectModel(Pharmacy.name) private pharmacyModel: Model<PharmacyDocument>,
+    @InjectRepository(Pharmacy)
+    private readonly pharmacyRepository: Repository<Pharmacy>,
   ) {}
 
-  async create(createPharmacyDto: any) {
-    const createdPharmacy = new this.pharmacyModel(createPharmacyDto);
-    return createdPharmacy.save();
+  async create(createPharmacyDto: CreatePharmacyDto): Promise<Pharmacy> {
+    const pharmacy = this.pharmacyRepository.create(createPharmacyDto);
+    return this.pharmacyRepository.save(pharmacy);
   }
 
-  async findAll() {
-    return this.pharmacyModel.find().exec();
+  async findAll(): Promise<Pharmacy[]> {
+    return this.pharmacyRepository.find();
   }
 
-  async findOne(id: string) {
-    const pharmacy = await this.pharmacyModel.findById(id).exec();
+  async findOne(id: number): Promise<Pharmacy> {
+    const pharmacy = await this.pharmacyRepository.findOneBy({ id });
     if (!pharmacy) {
       throw new NotFoundException('Pharmacy not found');
     }
     return pharmacy;
   }
 
-  async update(id: string, updatePharmacyDto: any) {
-    const updatedPharmacy = await this.pharmacyModel
-      .findByIdAndUpdate(id, updatePharmacyDto, { new: true })
-      .exec();
-    if (!updatedPharmacy) {
+  async update(id: number, updatePharmacyDto: UpdatePharmacyDto): Promise<Pharmacy> {
+    const pharmacy = await this.pharmacyRepository.preload({
+      id,
+      ...updatePharmacyDto,
+    });
+    if (!pharmacy) {
       throw new NotFoundException('Pharmacy not found');
     }
-    return updatedPharmacy;
+    return this.pharmacyRepository.save(pharmacy);
   }
 
-  async remove(id: string) {
-    const deletedPharmacy = await this.pharmacyModel.findOneAndDelete({ _id: id }).exec();
-    if (!deletedPharmacy) {
+  async update2(id: number, updatePharmacyDto: UpdatePharmacyDto): Promise<Pharmacy> {
+    const pharmacy = await this.pharmacyRepository.findOne(
+      {
+        where: {id:id}
+      }
+    );
+    console.log(pharmacy.address + "updated")
+    if (!pharmacy) {
       throw new NotFoundException('Pharmacy not found');
     }
-    return deletedPharmacy;
+    return this.pharmacyRepository.save(pharmacy);
+  }
+
+  async remove(id: number): Promise<void> {
+    const result = await this.pharmacyRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException('Pharmacy not found');
+    }
   }
 }
