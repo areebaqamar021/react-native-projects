@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
- 
+import { User } from './entities/user.entity';
+import { Profile } from './entities/profile.entity';
+import { Order } from './entities/order.entity';
+import { Product } from './entities/product.entity';
+import { Category } from './entities/category.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -11,16 +14,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '', 
-      database: 'pharmacy_db', 
-      synchronize: true,// Indicates if database schema should be auto created on every start
-      autoLoadEntities: true,
-      //Logger setings to log error's and warn's in the ORM.      
-      logger:'file',
-      logging:["error"]
+      password: 'password',
+      database: 'ecommerce',
+      entities: [User, Profile, Order, Product, Category],
+      synchronize: true, // Set to false in production
     }),
+    TypeOrmModule.forFeature([User, Profile, Order, Product, Category]),
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
