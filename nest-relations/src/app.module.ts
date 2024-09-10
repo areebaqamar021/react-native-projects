@@ -7,6 +7,7 @@ import { Product } from './entities/product.entity';
 import { Category } from './entities/category.entity';
 import { UserModule } from './user/user.module';
 import { ProfileModule } from './profile/profile.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ProfileModule } from './profile/profile.module';
     TypeOrmModule.forFeature([User, Profile, Order, Product, Category]),
     UserModule,
     ProfileModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [],
