@@ -15,7 +15,7 @@ import { ProfileModule } from './profile/profile.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'password',
+      password: '',
       database: 'ecommerce',
       entities: [User, Profile, Order, Product, Category],
       synchronize: true, // Set to false in production
