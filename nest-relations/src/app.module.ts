@@ -1,9 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/user.entity';
 import { UserModule } from './user/user.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
-import { UserProfile } from './user-profile/user-profile.entity';
+import { CategoryController } from './category/category.controller';
+import { CategoryModule } from './category/category.module';
+import { ProductService } from './product/product.service';
+import { ProductModule } from './product/product.module';
+import { StudentModule } from './student/student.module';
+import { CourseModule } from './course/course.module';
+import { EnrollmentModule } from './enrollment/enrollment.module';
 
 @Module({
   imports: [
@@ -14,16 +19,22 @@ import { UserProfile } from './user-profile/user-profile.entity';
       username: 'root',
       password: '',
       database: 'ecommerce',
-      entities: [User, UserProfile],
+      entities: [
+        __dirname + '/**/*.entity{.ts,.js}',  // Glob pattern to include all entities
+      ],
       synchronize: true, // Set to false in production
     }),
-    TypeOrmModule.forFeature([User, UserProfile]),
     UserModule,
     UserProfileModule,
+    CategoryModule,
+    ProductModule,
+    StudentModule,
+    CourseModule,
+    EnrollmentModule,
 
   ],
-  controllers: [],
+  controllers: [CategoryController],
   
-  providers: [],
+  providers: [ProductService],
 })
 export class AppModule {}
