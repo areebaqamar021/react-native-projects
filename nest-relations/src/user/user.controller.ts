@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 
@@ -8,22 +8,26 @@ export class UserController {
 
   @Get()
   findAll() {
-    var users=null
-    users= this.userService.findAll();
-
-    return users;
+    return this.userService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: number) {
-    var users=null
-console.log(users.profileID)
-    users= this.userService.findOne(id);
-return users.profile
-}
+    return this.userService.findOne(id);
+  }
 
   @Post()
-  create(@Body() user: Partial<User>): Promise<User> {
+  create(@Body() user: User) {
     return this.userService.create(user);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: number, @Body() user: Partial<User>) {
+    return this.userService.update(id, user);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: number) {
+    return this.userService.remove(id);
   }
 }

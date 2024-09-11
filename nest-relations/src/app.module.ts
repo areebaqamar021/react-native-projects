@@ -31,7 +31,6 @@ import { EnrollmentModule } from './enrollment/enrollment.module';
     StudentModule,
     CourseModule,
     EnrollmentModule,
-
   ],
   controllers: [CategoryController],
   
