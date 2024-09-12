@@ -1,5 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { Post } from './typeorm/entities/Post';
+import { Profile } from './typeorm/entities/Profile';
+import { User } from './typeorm/entities/User';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -10,11 +16,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'root',
       password: '',
       database: 'ecommerce',
-      entities: [
-        __dirname + '/**/*.entity{.ts,.js}',  // Glob pattern to include all entities
-      ],
-      synchronize: true, // Set to false in production
+      entities: [User, Profile, Post],
+      synchronize: true,
     }),
+    UsersModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
