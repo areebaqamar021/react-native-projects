@@ -5,6 +5,7 @@ import CalendarComponent from './src/components/myCalender';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import NotesApp from './src/components/NotesScreen';
+import Calculator from './src/components/Calculator';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ const HomeScreen = ({ navigation }: { navigation: any }) => {
       <Button title="Calendar" onPress={() => navigation.navigate('Calendar')} />
       <Button title="Timer" onPress={() => navigation.navigate('Timer')} />
       <Button title="Notes" onPress={() => navigation.navigate('Notes')} />
+      <Button title='Calculator' onPress={() => navigation.navigate('Calculator')} />
     </View>
   );
 };
@@ -27,6 +29,7 @@ const App = () => {
         <Stack.Screen name="Calendar" component={CalendarComponent} />
         <Stack.Screen name="Timer" component={TimerApp} />
         <Stack.Screen name='Notes' component={NotesApp} />
+        <Stack.Screen name='Calculator' component={Calculator} />
       </Stack.Navigator>
     </NavigationContainer>
   );

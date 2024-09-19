@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet, Alert, SafeAreaView } from 'react-native';
 
-// Utility function to generate unique IDs
 const generateId = () => Math.random().toString(36).slice(2, 11);
 
-const App = () => {
+const TodoList = () => {
   const [input, setInput] = useState('');
   const [todos, setTodos] = useState([]);
   const [editingId, setEditingId] = useState(null);
 
-  // Handle text input changes
+
   const handleInputChange = (text) => {
     setInput(text);
   };
 
-  // Add or update a todo item
   const handleTodoAction = () => {
     if (input.trim().length === 0) {
       Alert.alert('Error', 'Todo cannot be empty');
@@ -26,34 +24,30 @@ const App = () => {
     } else {
       addNewTodo();
     }
-    setInput(''); // Clear input field after action
+    setInput(''); 
   };
 
-  // Add a new todo
   const addNewTodo = () => {
     const newTodo = {
-      id: generateId(), // Use the manual ID generator
+      id: generateId(),
       text: input,
     };
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
-  // Update an existing todo
   const updateTodo = () => {
     const updatedTodos = todos.map((todo) =>
       todo.id === editingId ? { ...todo, text: input } : todo
     );
     setTodos(updatedTodos);
-    setEditingId(null); // Clear editing ID
+    setEditingId(null); 
   };
 
-  // Delete a todo item
   const deleteTodo = (id) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };
 
-  // Start editing a todo item
   const startEditing = (id) => {
     const todoToEdit = todos.find((todo) => todo.id === id);
     if (todoToEdit) {
@@ -62,7 +56,6 @@ const App = () => {
     }
   };
 
-  // Render each todo item
   const renderItem = ({ item }) => (
     <View style={styles.todoItem}>
       <Text>{item.text}</Text>
@@ -74,8 +67,8 @@ const App = () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => deleteTodo(item.id)}
-        style={[styles.deleteButton, { opacity: editingId ? 0.5 : 1 }]} // Disable button if editing
-        disabled={!!editingId} // Disable button if editing
+        style={[styles.deleteButton, { opacity: editingId ? 0.5 : 1 }]}
+        disabled={!!editingId}
       >
         <Text>Delete</Text>
       </TouchableOpacity>
@@ -98,7 +91,7 @@ const App = () => {
       <FlatList
         data={todos}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id} // Use ID as key extractor
+        keyExtractor={(item) => item.id} 
       />
     </View>
     </SafeAreaView>
@@ -107,7 +100,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ensure 'flex' is used correctly here
+    flex: 1,
     padding: 16,
     backgroundColor: '#fff',
   },
@@ -134,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default TodoList;
