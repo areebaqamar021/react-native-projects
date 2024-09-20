@@ -1,9 +1,14 @@
 import React from "react";
 import Header from "./components/Header";
+import Product from "./components/Product";
+import { View } from "react-native";
 
 const Home = () => {
     return (
-        <Header />
+        <View >
+             <Header />
+             <Product />
+        </View>
     )
 }
 
