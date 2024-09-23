@@ -5,6 +5,7 @@ const Card = ({ product }) => (
     <View style={styles.card}> 
         <Image style={styles.img} source={{ uri: product.images[0] }} />
         <Text style={styles.title}>{product.title}</Text>
+        <Text style={styles.price}>${product.price}</Text>
     </View>
 )
 
@@ -46,17 +47,25 @@ export default Product
 
 const styles = StyleSheet.create({
     card: {
-        padding : 20,
-        width: 200,
-        backgroundColor: '#ccc'
+        margin: 5,
+        padding : 10,
+        width: 175,
+        backgroundColor: '#fff',
+        borderRadius: 10,
     },
     img: {
-        width: 140,
+        width: 155,
         height: 150,
         borderRadius : 10,
     },
     title: {
         marginTop: 10,
-        width: 120,
+        width: 160,
+    },
+    price : {
+        fontSize: 15,
+        fontWeight: 'bold',
+        marginTop: 5,
+        color: '#B0B0B0'
     }
 })
