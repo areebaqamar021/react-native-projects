@@ -1,23 +1,45 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import DateTime from './src/DateTime';
-// import Home from './src/Home';
-
-const Stack = createNativeStackNavigator();
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import Practice from './src/practice/Practice'
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
-        {/* <Stack.Screen name="Home" component={Home} /> */}
-        <Stack.Screen name="DateTime" component={DateTime} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+    <View>
+      <Practice/>
+    </View>
+  )
+}
 
-export default App;
+export default App
+
+
+
+
+
+
+
+
+
+// import React from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import DateTime from './src/DateTime';
+// // import Home from './src/Home';
+
+// const Stack = createNativeStackNavigator();
+
+// const App = () => {
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+//         {/* <Stack.Screen name="Home" component={Home} /> */}
+//         <Stack.Screen name="DateTime" component={DateTime} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// };
+
+// export default App;
 
 // import React from 'react';
 // import { NavigationContainer } from '@react-navigation/native';
