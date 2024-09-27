@@ -1,7 +1,9 @@
 import { StyleSheet, SafeAreaView, TextInput, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 const Login = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Log In</Text>
@@ -16,14 +18,13 @@ const Login = () => {
       <TouchableOpacity style={styles.button} >
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
-      <TouchableOpacity>
         <Text style={styles.link}>Don't have an account? {''}
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
         <Text style={styles.linkText}>
             SignUp
         </Text>
+        </TouchableOpacity>
         </Text>
-        
-      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -53,16 +54,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: '#000',
     paddingVertical: 15,
-    width: '20%',
+    width: '25%',
     borderRadius: 5,
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 18,
     textAlign: 'center',
   },
   link: {
-    fontSize: 15,
+    fontSize: 18,
     marginTop: 10
   },
   linkText: {
