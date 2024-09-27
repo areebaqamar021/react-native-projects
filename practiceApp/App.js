@@ -9,6 +9,7 @@ import ListScreen from './src/practice/ListScreen';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const navigation = useNavigation();
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
