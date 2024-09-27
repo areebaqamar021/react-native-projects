@@ -1,24 +1,26 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Practice from './src/practice/Practice'
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './src/practice/HomeScreen';
+import ComponentScreen from './src/practice/ComponentScreen';
+import ListScreen from './src/practice/ListScreen';
+
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <View>
-      <Practice/>
-    </View>
-  )
-}
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="Component" component={ComponentScreen} />
+        <Stack.Screen name="List" component={ListScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
-export default App
-
-
-
-
-
-
-
-
+export default App;
 
 // import React from 'react';
 // import { NavigationContainer } from '@react-navigation/native';

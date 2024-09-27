@@ -1,8 +1,8 @@
 import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native'
 import React from 'react'
 
-const Practice = () => {
-    const friends = () => [
+const ListScreen = () => {
+    const friends = [
         { name: "Friend #1", age: '20' },
         { name: "Friend #2", age: '21' },
         { name: "Friend #3", age: '22' },
@@ -14,15 +14,15 @@ const Practice = () => {
         { name: "Friend #9", age: '28' },
     ]
     return (
-        <SafeAreaView>
+        <SafeAreaView >
             <FlatList
                 keyExtractor={friend => friend.name}
                 data={friends}
                 renderItem={({ item }) => {
                     return (
-                    <Text style={styles.textStyle}>
-                        {item.name} - Age {item.age}
-                    </Text>
+                        <Text style={styles.textStyle}>
+                            {item.name} - Age {item.age}
+                        </Text>
                     )
                 }}
             />
@@ -31,10 +31,10 @@ const Practice = () => {
     )
 }
 
-export default Practice
+export default ListScreen
 
 const styles = StyleSheet.create({
     textStyle: {
-        marginVertical: 50
+        marginVertical: 50,
     }
 })
