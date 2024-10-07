@@ -6,8 +6,10 @@ import auth from '@react-native-firebase/auth';
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const createUser = () => {
+
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
@@ -40,15 +42,18 @@ const SignUp = () => {
         placeholder="Enter Your password"
         onChangeText={setPassword}
         value={password}
-        returnKeyType='go'
         secureTextEntry
         autoCorrect={false}
       />
       <TextInput
         style={styles.input}
         placeholder="Confrim password"
+        onChangeText={setConfirmPassword}
+        value={confirmPassword}
+        secureTextEntry
+        autoCorrect={false}
       />
-      <TouchableOpacity style={styles.button} >
+      <TouchableOpacity style={styles.button} onPress={() => createUser()}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
       <Text style={styles.link}>Already have an account? {''}
