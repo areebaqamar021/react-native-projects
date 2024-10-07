@@ -1,8 +1,30 @@
 import { StyleSheet, SafeAreaView, TextInput, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 
 const SignUp = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const createUser = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+        console.error(error);
+      });
+  }
+
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
@@ -10,10 +32,17 @@ const SignUp = () => {
       <TextInput
         style={styles.input}
         placeholder="Enter your email"
+        onChangeText={setEmail}
+        value={email}
       />
       <TextInput
         style={styles.input}
         placeholder="Enter Your password"
+        onChangeText={setPassword}
+        value={password}
+        returnKeyType='go'
+        secureTextEntry
+        autoCorrect={false}
       />
       <TextInput
         style={styles.input}
@@ -22,13 +51,13 @@ const SignUp = () => {
       <TouchableOpacity style={styles.button} >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-        <Text style={styles.link}>Already have an account? {''}
+      <Text style={styles.link}>Already have an account? {''}
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.linkText}>
+          <Text style={styles.linkText}>
             Login
-        </Text>
+          </Text>
         </TouchableOpacity>
-        </Text>      
+      </Text>
     </SafeAreaView>
   )
 }
@@ -71,7 +100,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   linkText: {
-    color: '#0EA5E9', 
+    color: '#0EA5E9',
     textDecorationLine: 'underline',
   }
 })
