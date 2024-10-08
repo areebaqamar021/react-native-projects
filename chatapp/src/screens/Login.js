@@ -1,6 +1,7 @@
-import { StyleSheet, SafeAreaView, TextInput, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, SafeAreaView, TextInput, Text, TouchableOpacity, Alert } from 'react-native'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import auth from '@react-native-firebase/auth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,8 +17,9 @@ const Login = () => {
       setError('Please fill in all fields.');
       return;
     }
+
     auth()
-      .createUserWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email.trim(), password)
       .then(() => {
         console.log('User logged In');
         Alert.alert('Success', 'Logged In successfully!');
@@ -110,5 +112,10 @@ const styles = StyleSheet.create({
   linkText: {
     color: '#0EA5E9',
     textDecorationLine: 'underline',
-  }
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 8,
+    textAlign: 'center',
+  },
 })
