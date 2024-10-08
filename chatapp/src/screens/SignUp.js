@@ -28,7 +28,6 @@ const SignUp = () => {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User account created & signed in!');
-        Alert.alert('Success', 'User account created successfully!');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {

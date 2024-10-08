@@ -1,15 +1,12 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
 import React from 'react'
-import { useNavigation } from '@react-navigation/native'
 import auth from '@react-native-firebase/auth';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
     const handleLogout = () => {
         auth()
             .signOut()
-            .then(() => {
-                navigation.navigate('Login');
-            });
+            .then(() => console.log('User signed out!'));
     };
     return (
         <View>
