@@ -130,9 +130,4 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlign: 'center',
   },
-  errorText: {
-    color: 'red',
-    marginTop: 8,
-    textAlign: 'center',
-  },
 })
