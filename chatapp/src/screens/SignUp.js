@@ -7,7 +7,9 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('')
+  const [error, setError] = useState('');
+
+  const navigation = useNavigation();
 
   const createUser = () => {
 
@@ -22,26 +24,24 @@ const SignUp = () => {
       setError('Passwords do not match!');
       return;
     }
-
     auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      console.log('User account created & signed in!');
-      Alert.alert('Success', 'User account created successfully!');
-    })
-    .catch(error => {
-      if (error.code === 'auth/email-already-in-use') {
-        setError('That email address is already in use!');
-      } else if (error.code === 'auth/invalid-email') {
-        setError('That email address is invalid!');
-      } else {
-        setError('An error occurred, please try again.');
-      }
-      console.error(error);
-    });
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+        Alert.alert('Success', 'User account created successfully!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          setError('That email address is already in use!');
+        } else if (error.code === 'auth/invalid-email') {
+          setError('That email address is invalid!');
+        } else {
+          setError('An error occurred, please try again.');
+        }
+        console.error(error);
+      });
   };
 
-  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Sign Up</Text>
@@ -69,7 +69,7 @@ const SignUp = () => {
         secureTextEntry
         autoCorrect={false}
       />
-      {error ? <Text style={styles.errorText}>{error}</Text> : null} {/* Error message */}
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       <TouchableOpacity style={styles.button} onPress={createUser}>
         <Text style={styles.buttonText}>Sign Up</Text>
