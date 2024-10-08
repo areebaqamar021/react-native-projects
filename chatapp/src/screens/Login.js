@@ -19,7 +19,7 @@ const Login = () => {
     }
 
     auth()
-      .signInWithEmailAndPassword(email.trim(), password)
+      .signInWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User logged In');
         Alert.alert('Success', 'Logged In successfully!');

@@ -2,8 +2,10 @@ import { StyleSheet, SafeAreaView, TextInput, Text, TouchableOpacity } from 'rea
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import { addUser } from '../services/firestoreService'; // Import the addUser function
 
 const SignUp = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -26,8 +28,14 @@ const SignUp = () => {
     }
     auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
+      .then((val) => {
+        console.log('User account created & signed in!', val.user.uid);
+        const user = {
+          uid: val.user.uid,
+          name,
+          email,
+        }
+        addUser(user)
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -44,6 +52,13 @@ const SignUp = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Sign Up</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your name"
+        onChangeText={setName}
+        value={name}
+        autoCapitalize="none"
+      />
       <TextInput
         style={styles.input}
         placeholder="Enter your email"

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
 import React from 'react'
 import auth from '@react-native-firebase/auth';
+import { getAllUsers } from '../services/firestoreService'; // Adjust the path as needed
 
 const HomeScreen = () => {
     const handleLogout = () => {
