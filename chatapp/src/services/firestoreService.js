@@ -6,6 +6,6 @@ export const addUser = async (data) => {
 };
 
 export const getAllUsers = async () => {
-    const users = await usersCollection.get();
-    return users.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const usersSnapshot = await users.get();
+    return usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
