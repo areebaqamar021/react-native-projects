@@ -6,6 +6,7 @@ import SignUp from './src/screens/SignUp';
 import HomeScreen from './src/screens/HomeScreen';
 import auth from '@react-native-firebase/auth';
 import UsersList from './src/screens/UsersList';
+import ChatRoom from './src/screens/ChatRoom';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const App = () => {
         <>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Users" component={UsersList} />
+        <Stack.Screen name="ChatRoom" component={ChatRoom} />
         </>
       ) : (
         <>

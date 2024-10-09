@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { getAllUsers } from '../services/firestoreService';
+import { useNavigation } from '@react-navigation/native'
 import auth from '@react-native-firebase/auth';
 
 const UsersList = () => {
     const [users, setUsers] = useState([]);
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -23,7 +25,7 @@ const UsersList = () => {
 
     const renderItem = ({ item }) => (
         <View style={styles.item}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ChatRoom')}>
                 <Text>{item.name}</Text>
                 <Text>{item.email}</Text>
             </TouchableOpacity>
