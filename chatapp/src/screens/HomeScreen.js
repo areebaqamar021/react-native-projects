@@ -18,7 +18,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
             <Text>Welcome to Home Screen!</Text>
             <Button title="Logout" onPress={handleLogout} />
-            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Users')}>
                 <Icon name="add-box" size={50} />
             </TouchableOpacity>
         </View>

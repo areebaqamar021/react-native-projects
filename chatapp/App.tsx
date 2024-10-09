@@ -5,6 +5,7 @@ import Login from './src/screens/Login';
 import SignUp from './src/screens/SignUp';
 import HomeScreen from './src/screens/HomeScreen';
 import auth from '@react-native-firebase/auth';
+import UsersList from './src/screens/UsersList';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,7 +28,10 @@ const App = () => {
     <NavigationContainer>
     <Stack.Navigator initialRouteName={user ? "Home" : "Login"}>
       {user ? (
+        <>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Users" component={UsersList} />
+        </>
       ) : (
         <>
           <Stack.Screen name="Login" component={Login} />
