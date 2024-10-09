@@ -6,6 +6,6 @@ export const addUser = async (data) => {
 };
 
 export const getAllUsers = async () => {
-    const usersSnapshot = await users.get();
+    const usersSnapshot = await firestore().collection('Users').get(); 
     return usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
