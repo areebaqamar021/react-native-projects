@@ -1,6 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
 
-
 export const addUser = async (data) => {
     await firestore().collection('Users').doc(data.uid).set(data);
 };

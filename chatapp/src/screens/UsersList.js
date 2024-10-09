@@ -1,45 +1,45 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { getAllUsers } from '../services/firestoreService';
 import auth from '@react-native-firebase/auth';
 
 const UsersList = () => {
     const [users, setUsers] = useState([]);
-    
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const usersData = await getAllUsers();
                 const currentUser = auth().currentUser;
-                const filteredUsers = usersData.filter(user => user.id !== currentUser.uid)
-                // console.log(usersData);
-                setUsers(filteredUsers);
-            }catch(error){
-                console.error('Error Fetching users:', error)
+                const filteredUser = usersData.filter((user) => user.id !== currentUser.uid)
+                // console.log("====", filteredUser)
+                setUsers(filteredUser);
+            } catch (error) {
+                console.error("Error fetching data:", error);
             }
-           
-        };
-        fetchUsers(); 
+        }
+        fetchUsers();
     }, [])
 
     const renderItem = ({ item }) => (
         <View style={styles.item}>
-            <Text>{item.name}</Text>
-            <Text>{item.email}</Text>
+            <TouchableOpacity>
+                <Text>{item.name}</Text>
+                <Text>{item.email}</Text>
+            </TouchableOpacity>
         </View>
     );
 
-  return (
-    <View style={styles.container}>
+    return (
+        <View style={styles.container}>
             <FlatList
-            data={users}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            contentContainerStyle={styles.listContainer}
+                data={users}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                contentContainerStyle={styles.listContainer}
             />
         </View>
-  )
+    )
 }
 
 export default UsersList
