@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { sendMessage, getMessages } from '../services/firestoreService';
 import auth from '@react-native-firebase/auth';
@@ -36,8 +36,8 @@ const ChatRoom = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Chat</Text>
+    <SafeAreaView style={styles.container}>
+    <View>
       <FlatList
         data={messages}
         renderItem={renderItem}
@@ -56,6 +56,7 @@ const ChatRoom = ({ route }) => {
         </TouchableOpacity>
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#ccc',
+    // marginBottom: 25,
   },
   input: {
     flex: 1,
