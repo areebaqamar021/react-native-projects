@@ -1,18 +1,49 @@
-import { View, Text, FlatList, TextInput, Button, StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import firestore from '@react-native-firebase/firestore';
+import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { sendMessage, getMessages } from '../services/firestoreService';
 import auth from '@react-native-firebase/auth';
 
 const ChatRoom = ({ route }) => {
-  const userId = route.params;
+  const params = route.params;
+  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState([]);
+  const currentUser = auth().currentUser;
+
+  useEffect(() => {
+    const unsubscribe = getMessages(currentUser.uid, params.uid, (fetchedMessages) => {
+      setMessages(fetchedMessages);
+    });
+
+    return () => unsubscribe();
+  }, [currentUser.uid, params.uid]);
+
+  const handleMessage = async () => {
+    try {
+      await sendMessage(input, currentUser.uid, params.uid);
+      setInput('');
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+
+  const renderItem = ({ item }) => {
+    const isCurrentUser = item.userId === currentUser.uid;
+    return (
+      <View style={[styles.messageContainer, isCurrentUser ? styles.sentMessage : styles.receivedMessage]}>
+        <Text style={styles.messageText}>{item.text}</Text>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      {/* {user && ( */}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>{user.name}</Text>
-      </View>
-      {/* )} */}
+      <Text style={styles.header}>Chat</Text>
+      <FlatList
+        data={messages}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      />
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -20,18 +51,20 @@ const ChatRoom = ({ route }) => {
           onChangeText={setInput}
           placeholder="Type a message"
         />
-        <Button title="Send" onPress={sendMessage} />
+        <TouchableOpacity style={styles.button} onPress={handleMessage}>
+          <Text style={styles.buttonText}>Send</Text>
+        </TouchableOpacity>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default ChatRoom
+export default ChatRoom;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    justifyContent: 'flex-end',
   },
   header: {
     padding: 10,
@@ -39,19 +72,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
-  headerText: {
-    fontWeight: 'bold',
-  },
-  // message: {
-  //     padding: 10,
-  //     marginVertical: 5,
-  //     backgroundColor: '#e1ffc7',
-  //     borderRadius: 10,
-  // },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
   },
   input: {
     flex: 1,
@@ -60,6 +87,44 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginRight: 10,
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    borderRadius: 5,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 70,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  messageContainer: {
+    maxWidth: '75%',
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 15,
+  },
+  sentMessage: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#007BFF',
+    marginLeft: 20,
+  },
+  receivedMessage: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#e1e1e1',
+    marginRight: 20,
+  },
+  messageText: {
+    fontSize: 16,
+  },
+  sentMessageText: {
+    color: '#fff', 
+  },
+  receivedMessageText: {
+    color: '#000', 
   },
 });
 
