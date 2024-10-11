@@ -24,11 +24,9 @@ export const sendMessage = async (text, senderId, recieverId) => {
 
 }
 
-// Function to get messages in real-time
 export const getMessages = (senderId, receiverId, callback) => {
-    const chatId = senderId + receiverId; // Create a unique chat ID
+    const chatId = senderId + receiverId;
 
-    // Listen for real-time updates
     const unsubscribe = firestore()
         .collection('messages')
         .doc(chatId)
@@ -40,10 +38,8 @@ export const getMessages = (senderId, receiverId, callback) => {
                 ...doc.data(),
             }));
 
-            // Call the callback with the new messages
             callback(messages);
         });
 
-    // Return a function to unsubscribe from the listener when no longer needed
     return unsubscribe;
 };
