@@ -37,7 +37,6 @@ const ChatRoom = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-    <View>
       <FlatList
         data={messages}
         renderItem={renderItem}
@@ -54,8 +53,7 @@ const ChatRoom = ({ route }) => {
         <TouchableOpacity style={styles.button} onPress={handleMessage}>
           <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
-      </View>
-    </View>
+      </View>   
     </SafeAreaView>
   );
 };
@@ -80,7 +78,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#ccc',
-    // marginBottom: 25,
   },
   input: {
     flex: 1,
@@ -109,24 +106,20 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 15,
   },
-  sentMessage: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#007BFF',
-    marginLeft: 20,
-  },
   receivedMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: '#e1e1e1',
+    backgroundColor: '#007BFF',
     marginRight: 20,
+  },
+  sentMessage: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#e1e1e1',
+    marginLeft: 20,
+    color: '#fff',
   },
   messageText: {
     fontSize: 16,
-  },
-  sentMessageText: {
-    color: '#fff', 
-  },
-  receivedMessageText: {
-    color: '#000', 
+    color: '#fff',
   },
 });
 
