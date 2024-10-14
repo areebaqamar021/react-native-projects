@@ -17,18 +17,23 @@ const TodoList = () => {
   }
 
   const updateTask = () => {
-    if(input.trim() === '' || editIndex === null) return;
+    if (input.trim() === '' || editIndex === null) return;
     const updatedTasks = tasks.map((item, index) =>
       index === editIndex ? input : item
     )
     setTasks(updatedTasks);
     setInput('')
-    editIndex(null);
+    setEditIndex(null);
   }
 
   const startEdit = (index) => {
     setInput(tasks[index]);
     setEditIndex(index);
+  }
+
+  const deleteTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index)
+    setTasks(updatedTasks);
   }
 
   return (
@@ -41,23 +46,28 @@ const TodoList = () => {
           style={styles.input}
         />
         {editIndex !== null ? (
-          <TouchableOpacity onPress={addTask} style={styles.button}>
-          <Text style={styles.buttonText}>Add</Text>
-        </TouchableOpacity>
-        ) : (
           <TouchableOpacity onPress={updateTask} style={styles.button}>
-          <Text style={styles.buttonText}>Add</Text>
-        </TouchableOpacity>
-        )
-
-        }
-        
+            <Text style={styles.buttonText}>Update</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={addTask} style={styles.button}>
+            <Text style={styles.buttonText}>Add</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <FlatList
         data={tasks}
-        keyExtractor={(item, index) => index.toString}
-        renderItem={({ item }) => (
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item, index }) => (
           <View style={styles.taskContainer}>
+            <View style={styles.editDeleteContainer}>
+              <TouchableOpacity onPress={() => startEdit(index)} style={styles.editButton}>
+                <Text style={styles.editDeleteText}>Edit</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => deleteTask(index)}>
+                <Text style={styles.editDeleteText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
             <Text style={styles.taskText}>{item}</Text>
           </View>
         )}
@@ -71,38 +81,79 @@ export default TodoList
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    padding: 20,
+    backgroundColor: '#f5f5f5',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    padding: 10,
   },
   input: {
     flex: 1,
     borderColor: '#ccc',
     borderWidth: 1,
+    borderRadius: 5,
     padding: 10,
     marginRight: 10,
+    backgroundColor: '#fafafa',
   },
   button: {
     backgroundColor: '#007BFF',
-    padding: 10,
-    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 5,
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   taskContainer: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    flexDirection: 'row-reverse', // Reverse the row to put text on the right
+    alignItems: 'center', // Center vertically
+    padding: 15,
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    marginBottom: 10,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  editDeleteContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 10, // Space between buttons and text
   },
   taskText: {
     fontSize: 16,
+    color: '#333',
+    flex: 1, // Allow text to take the remaining space
+    overflow: 'hidden', // Prevent text overflow
+    textOverflow: 'ellipsis', // Show ellipsis if text overflows (for web)
   },
-})
+  editDeleteText: {
+    color: '#007BFF',
+    fontWeight: '600',
+    marginRight: 10, // Space between buttons
+  },
+  editButton: {
+    marginRight: 10,
+  },
+  editDeleteText: {
+    color: '#007BFF',
+    fontWeight: '600',
+  },
+});
+
 
 
 
