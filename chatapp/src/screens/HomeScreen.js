@@ -1,23 +1,18 @@
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, TextInput, View, Button, TouchableOpacity } from 'react-native'
 import React from 'react'
-import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ChatList from '../components/ChatList';
 
-const HomeScreen = () => {
-
+const HomeScreen = ({route}) => {
     const navigation = useNavigation();
-
-    const handleLogout = () => {
-        auth()
-            .signOut()
-            .then(() => console.log('User signed out!'));
-    };
-
     return (
         <View style={styles.container}>
-            <Text>Welcome to Home Screen!</Text>
-            <Button title="Logout" onPress={handleLogout} />
+            <TextInput
+                style={styles.searchBar}
+                placeholder="Search Users..."
+            />
+            <ChatList currentUserId={route.params?.user?.uid}/>
             <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Users')}>
                 <Icon name="add-box" size={50} />
             </TouchableOpacity>
@@ -30,8 +25,14 @@ export default HomeScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    },
+    searchBar: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        paddingHorizontal: 8,
+        margin: 20,
+        borderRadius: 20
     },
     addButton: {
         bottom: 40,

@@ -21,7 +21,6 @@ export const sendMessage = async (text, senderId, recieverId) => {
             users: [senderId, recieverId]
         })
     }
-
 }
 
 export const getMessages = (senderId, receiverId, callback) => {
@@ -43,3 +42,19 @@ export const getMessages = (senderId, receiverId, callback) => {
 
     return unsubscribe;
 };
+
+export const getChatList = async () => {
+    const userIds = [];
+    try {
+        const messagesSnapshot = await firestore().collection('messages').get();
+        messagesSnapshot.forEach(doc => {
+            const data = doc.data();
+            console.log(data);
+        });
+        return Array.from(userIds);
+
+    } catch (error) {
+        console.error('=====', error);
+        return [];
+    }
+}
