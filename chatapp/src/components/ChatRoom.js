@@ -11,10 +11,11 @@ const ChatRoom = ({ route }) => {
 
   useEffect(() => {
     const unsubscribe = getMessages(currentUser.uid, params.uid, (fetchedMessages) => {
+      // console.log('Fetched messages:', fetchedMessages);
       setMessages(fetchedMessages);
     });
 
-    return () => unsubscribe();
+    return () => unsubscribe;
   }, [currentUser.uid, params.uid]);
 
   const handleMessage = async () => {
@@ -27,7 +28,8 @@ const ChatRoom = ({ route }) => {
   };
 
   const renderItem = ({ item }) => {
-    const isCurrentUser = item.userId === currentUser.uid;
+    // console.log('Message Item:', item);
+    const isCurrentUser = item.senderId === currentUser.uid;
     return (
       <View style={[styles.messageContainer, isCurrentUser ? styles.sentMessage : styles.receivedMessage]}>
         <Text style={styles.messageText}>{item.text}</Text>
@@ -53,7 +55,7 @@ const ChatRoom = ({ route }) => {
         <TouchableOpacity style={styles.button} onPress={handleMessage}>
           <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
-      </View>   
+      </View>
     </SafeAreaView>
   );
 };
@@ -107,19 +109,19 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   receivedMessage: {
-    alignSelf: 'flex-end',
-    backgroundColor: '#007BFF',
-    marginRight: 20,
-  },
-  sentMessage: {
     alignSelf: 'flex-start',
     backgroundColor: '#e1e1e1',
     marginLeft: 20,
-    color: '#fff',
+    color: '#000',
+  },
+  sentMessage: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#007BFF',
+    marginRight: 20,
+    color: '#000',
   },
   messageText: {
     fontSize: 16,
-    color: '#fff',
   },
 });
 

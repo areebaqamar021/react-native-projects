@@ -5,7 +5,7 @@ const ChatList = ({ currentUserId }) => {
   
   return (
     <View>
-      
+      ChatList
     </View>
   )
 }

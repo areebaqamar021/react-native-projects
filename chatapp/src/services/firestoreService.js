@@ -10,16 +10,26 @@ export const getAllUsers = async () => {
 };
 
 export const sendMessage = async (text, senderId, recieverId) => {
-    await firestore().collection('messages').doc(senderId + recieverId).set({
-        senderId,
-        recieverId,
-    })
+    const chatId = senderId + recieverId;
+    // await firestore()
+    //     .collection('messages')
+    //     .doc(chatId)
+    //     .set({
+    //         senderId,
+    //         recieverId,
+    //     })
     if (text.trim()) {
-        await firestore().collection('messages').doc(senderId + recieverId).collection('chat').add({
-            text,
-            createdAt: firestore.FieldValue.serverTimestamp(),
-            users: [senderId, recieverId]
-        })
+        await firestore()
+            .collection('messages')
+            .doc(chatId).
+            collection('chat')
+            .add({
+                text,
+                createdAt: firestore.FieldValue.serverTimestamp(),
+                users: [senderId, recieverId],
+                senderId,
+                recieverId
+            })
     }
 }
 
@@ -36,25 +46,11 @@ export const getMessages = (senderId, receiverId, callback) => {
                 id: doc.id,
                 ...doc.data(),
             }));
-
+            // console.log('Fetched messages:', messages);
             callback(messages);
         });
 
     return unsubscribe;
 };
 
-export const getChatList = async () => {
-    const userIds = [];
-    try {
-        const messagesSnapshot = await firestore().collection('messages').get();
-        messagesSnapshot.forEach(doc => {
-            const data = doc.data();
-            console.log(data);
-        });
-        return Array.from(userIds);
 
-    } catch (error) {
-        console.error('=====', error);
-        return [];
-    }
-}
