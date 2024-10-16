@@ -9,48 +9,88 @@ export const getAllUsers = async () => {
     return usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
 
-export const sendMessage = async (text, senderId, recieverId) => {
-    const chatId = senderId + recieverId;
-    // await firestore()
-    //     .collection('messages')
-    //     .doc(chatId)
-    //     .set({
-    //         senderId,
-    //         recieverId,
-    //     })
-    if (text.trim()) {
-        await firestore()
-            .collection('messages')
-            .doc(chatId).
-            collection('chat')
-            .add({
-                text,
-                createdAt: firestore.FieldValue.serverTimestamp(),
-                users: [senderId, recieverId],
-                senderId,
-                recieverId
-            })
-    }
-}
-
-export const getMessages = (senderId, receiverId, callback) => {
-    const chatId = senderId + receiverId;
-
-    const unsubscribe = firestore()
-        .collection('messages')
-        .doc(chatId)
-        .collection('chat')
-        .orderBy('createdAt')
-        .onSnapshot(snapshot => {
-            const messages = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            // console.log('Fetched messages:', messages);
-            callback(messages);
-        });
-
-    return unsubscribe;
+const getUserNameById = async (userId) => {
+    const userDoc = await firestore().collection('Users').doc(userId).get(); 
+    console.log("userDoc", userDoc);
+    return userDoc.exists ? userDoc.data().name : null;
 };
 
+export const sendMessage = async (text, senderId, receiverId) => {
+    const chatRoomId = await createOrGetChatRoom(senderId, receiverId); // Ensure chat room exists
+  
+    // Add the message to the messages sub-collection
+    const messageRef = firestore()
+      .collection('chatrooms')
+      .doc(chatRoomId)
+      .collection('messages');
+  
+    await messageRef.add({
+      text,
+      senderId,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+    });
+  
+    // Update the last message and timestamp in the chat room
+    await firestore()
+      .collection('chatrooms')
+      .doc(chatRoomId)
+      .update({
+        lastMessage: text,
+        updatedAt: firestore.FieldValue.serverTimestamp(),
+      });
+  };
+  
+
+  export const getMessages = (senderId, receiverId, callback) => {
+    const chatRoomId = [senderId, receiverId].sort().join('_'); // Ensure consistent chatroom ID
+  
+    const unsubscribe = firestore()
+      .collection('chatrooms')
+      .doc(chatRoomId)
+      .collection('messages')
+      .orderBy('createdAt', 'asc')
+      .onSnapshot(snapshot => {
+        const messages = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        callback(messages);
+      });
+  
+    return unsubscribe;
+  };
+  
+
+export const createOrGetChatRoom = async (senderId, receiverId) => {
+  const chatRoomId = [senderId, receiverId].sort().join('_'); 
+
+  const chatRoomRef = firestore().collection('chatrooms').doc(chatRoomId);
+
+  const chatRoomSnapshot = await chatRoomRef.get();
+  
+  if (!chatRoomSnapshot.exists) {
+    await chatRoomRef.set({
+      participants: [senderId, receiverId],
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      updatedAt: firestore.FieldValue.serverTimestamp(),
+      lastMessage: '',
+    });
+  }
+  
+  return chatRoomId; 
+};
+
+export const getChatRooms = async (userId) => {
+    const chatRoomsSnapshot = await firestore()
+      .collection('chatrooms')
+      .where('participants', 'array-contains', userId)
+      .orderBy('updatedAt', 'desc')
+      .get();
+  
+    return chatRoomsSnapshot.docs.map(doc => ({
+      id: doc.id, 
+      ...doc.data(), 
+    }));
+  };
+  
 

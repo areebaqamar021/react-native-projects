@@ -1,34 +1,52 @@
 import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { sendMessage, getMessages } from '../services/firestoreService';
+import React, { useState, useEffect, useRef } from 'react';
+import { sendMessage, getMessages, createOrGetChatRoom } from '../services/firestoreService';
 import auth from '@react-native-firebase/auth';
 
 const ChatRoom = ({ route }) => {
   const params = route.params;
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
-  const currentUser = auth().currentUser;
+  const [currentUser, setCurrentUser] = useState(null);
+  const flatListRef = useRef(null); 
 
   useEffect(() => {
-    const unsubscribe = getMessages(currentUser.uid, params.uid, (fetchedMessages) => {
-      // console.log('Fetched messages:', fetchedMessages);
+    const user = auth().currentUser;
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      console.error("Current user is not logged in");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!currentUser) return;
+
+    const unsubscribe = getMessages(params?.senderId, params?.recieverId, (fetchedMessages) => {
       setMessages(fetchedMessages);
+      if (!fetchedMessages.length) {
+        createOrGetChatRoom(params, currentUser); 
+      }
+      flatListRef.current?.scrollToEnd({ animated: true });
     });
 
-    return () => unsubscribe;
-  }, [currentUser.uid, params.uid]);
+    return () => unsubscribe(); 
+  }, [currentUser, params]);
 
   const handleMessage = async () => {
+    if (!currentUser) {
+      console.error("Cannot send message; no current user");
+      return;
+    }
     try {
-      await sendMessage(input, currentUser.uid, params.uid);
+      await sendMessage(input, params.senderId, params.receiverId);
       setInput('');
     } catch (e) {
-      console.log("error", e);
+      console.error(["Error sending message", e]);
     }
   };
 
   const renderItem = ({ item }) => {
-    // console.log('Message Item:', item);
     const isCurrentUser = item.senderId === currentUser.uid;
     return (
       <View style={[styles.messageContainer, isCurrentUser ? styles.sentMessage : styles.receivedMessage]}>
@@ -40,10 +58,12 @@ const ChatRoom = ({ route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
+        ref={flatListRef}
         data={messages}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingBottom: 20 }}
+        onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}  // Auto-scroll when content changes
       />
       <View style={styles.inputContainer}>
         <TextInput
@@ -66,12 +86,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-end',
-  },
-  header: {
-    padding: 10,
-    backgroundColor: '#f1f1f1',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -112,16 +126,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     backgroundColor: '#e1e1e1',
     marginLeft: 20,
-    color: '#000',
   },
   sentMessage: {
     alignSelf: 'flex-end',
     backgroundColor: '#007BFF',
     marginRight: 20,
-    color: '#000',
   },
   messageText: {
     fontSize: 16,
+    color: '#000',
   },
 });
-
