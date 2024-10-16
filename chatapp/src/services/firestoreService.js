@@ -83,7 +83,7 @@ export const createOrGetChatRoom = async (senderId, receiverId) => {
 export const getChatRooms = async (userId) => {
     const chatRoomsSnapshot = await firestore()
       .collection('chatrooms')
-      .where('participants', 'array-contains', userId)
+      .where('messages', 'array-contains', userId)
       .orderBy('updatedAt', 'desc')
       .get();
   
