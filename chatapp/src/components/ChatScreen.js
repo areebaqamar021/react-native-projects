@@ -1,5 +1,79 @@
+import React, {useEffect, useState, useCallback} from 'react';
+import {View, StyleSheet, Alert, SafeAreaView,} from 'react-native';
+import {GiftedChat} from 'react-native-gifted-chat';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
+const ChatScreen = ({route}) => {
+  const {roomId, roomName} = route.params;
+  const [messages, setMessages] = useState([]);
+  const user = auth().currentUser;
+  useEffect(() => {
+    const unsubscribe = firestore()
+      .collection('chatRooms')
+      .doc(roomId)
+      .collection('messages')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot(
+        querySnapshot => {
+          const messagesFirestore = querySnapshot.docs.map(doc => {
+            const firebaseData = doc.data();
+            const data = {
+              _id: doc.id,
+              text: '',
+              createdAt: new Date().getTime(),
+              ...firebaseData,
+            };
+            if (!firebaseData.system) {
+              data.user = {
+                _id: firebaseData.user._id,
+                name: firebaseData.user.name,
+              };
+            }
+            return data;
+          });
+          setMessages(messagesFirestore);
+        },
+        error => {
+          Alert.alert('Error', 'Failed to load messages.',error);
+        },
+      );
+    return () => unsubscribe();
+  }, []);
 
+  const onSend = useCallback((messages = []) => {
+    const writes = messages.map(m =>
+      firestore()
+        .collection('chatRooms')
+        .doc(roomId)
+        .collection('messages')
+        .add({...m, createdAt: firestore.FieldValue.serverTimestamp()}),
+    );
+    Promise.all(writes).catch(err => {
+      Alert.alert('Error', 'Failed to send message.',err);
+    });
+  }, []);
+
+  return (
+    <SafeAreaView style={styles.container}>
+    <GiftedChat
+      messages={messages}
+      onSend={messages => onSend(messages)}
+      user={{
+        _id: user.uid,
+        name: user.displayName || 'Anonymous',
+      }}
+    />
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }});
+
+export default ChatScreen;
 
 
 

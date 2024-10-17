@@ -8,20 +8,26 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import { getChatRooms, createChatRoom } from '../services/firestoreService';
+
 const ChatRoom = ({ navigation }) => {
   const [chatRooms, setChatRooms] = useState([]);
   const [newRoomName, setNewRoomName] = useState('');
 
   useEffect(() => {
-    const unsubscribe = getChatRooms()
-      .then(setChatRooms)
-      .catch(error => {
-        Alert.alert('Error', 'Failed to load chat rooms.', error);
-      });
-    return () => unsubscribe();
+    let isMounted = true;
+  
+    const unsubscribe = getChatRooms(setChatRooms);
+  
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
   }, []);
+  
+
 
   const handleCreateRoom = async () => {
     if (newRoomName.trim() === '') {
@@ -33,61 +39,57 @@ const ChatRoom = ({ navigation }) => {
       setNewRoomName('');
       navigation.navigate('Chat', { roomId: roomRef.id, roomName: newRoomName });
     } catch (error) {
-      Alert.alert('Error', 'Failed to create chat room.');
+      Alert.alert('Error', 'Failed to create chat room.', error.message);
     }
   };
-  
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.roomItem}
       onPress={() =>
         navigation.navigate('Chat', { roomId: item.id, roomName: item.name })
       }>
-      {' '}
-      <Text style={styles.roomName}>{item.name}</Text>{' '}
+
+      <Text style={styles.roomName}>{item.name}</Text>
     </TouchableOpacity>
   );
-
   return (
-    <View style={styles.container}>
-      {' '}
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={chatRooms}
         keyExtractor={item => item.id}
         renderItem={renderItem}
         ListEmptyComponent={<Text>No chat rooms available. Create one!</Text>}
-      />{' '}
+      />
       <View style={styles.inputContainer}>
-        {' '}
         <TextInput
           style={styles.input}
           placeholder="New Chat Room"
           value={newRoomName}
           onChangeText={setNewRoomName}
-        />{' '}
-        <Button title="Create" onPress={handleCreateRoom} />{' '}
-      </View>{' '}
-    </View>
+        />
+        <Button style={styles.button} title="Create" onPress={handleCreateRoom} />
+      </View>
+    </SafeAreaView>
   );
 };
-
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    padding: 16 
+  container: {
+    flex: 1,
+    padding: 16
   },
-  roomItem: { 
-    padding: 15, 
-    borderBottomWidth: 1, 
-    borderBottomColor: '#ccc' 
+  roomItem: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc'
   },
-  roomName: { 
-    fontSize: 18 
+  roomName: {
+    fontSize: 18
   },
-  inputContainer: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    marginTop: 10 
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10
   },
   input: {
     flex: 1,
@@ -100,8 +102,6 @@ const styles = StyleSheet.create({
   },
 });
 export default ChatRoom;
-
-
 
 
 

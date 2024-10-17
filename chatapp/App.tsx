@@ -9,6 +9,7 @@ import UsersList from './src/components/UsersList';
 import ChatRoom from './src/components/ChatRoom';
 import { Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ChatScreen from './src/components/ChatScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,11 +18,13 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   function onAuthStateChanged(user) {
-    // console.log(user, "=== user")
+    console.log(user, "=== user")
     setUser(user);
-    if (initializing) setInitializing(false);
+    
+    if (initializing) {
+      setInitializing(false);
+    }
   }
-
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
@@ -29,7 +32,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? "Home" : "Login"} >
+      <Stack.Navigator initialRouteName={user ? "ChatRoom" : "Login"} >
         {user ? (
           <>
             {/* <Stack.Screen name="Home" component={HomeScreen}  options={{ //initialParams={{ user }}
@@ -39,6 +42,7 @@ const App = () => {
             }} /> */}
             {/* <Stack.Screen name="Users" component={UsersList} /> */}
             <Stack.Screen name="ChatRoom" component={ChatRoom} />
+            <Stack.Screen name="Chat" component={ChatScreen} />
           </>
         ) : (
           <>

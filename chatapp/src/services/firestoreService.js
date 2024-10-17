@@ -20,15 +20,16 @@ export const createChatRoom = async roomName => {
   }
 };
 
-export const getChatRooms = () => {
+export const getChatRooms = (setChatRooms) => {
   return firestore()
     .collection('chatRooms')
     .orderBy('createdAt', 'desc')
     .onSnapshot(snapshot => {
-      const rooms = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-      return rooms;
+      const rooms = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setChatRooms(rooms);
     });
 };
+
 
 
 
