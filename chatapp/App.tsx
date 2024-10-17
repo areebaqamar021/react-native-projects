@@ -38,7 +38,7 @@ const App = () => {
               </TouchableOpacity>
             }} />
             <Stack.Screen name="Users" component={UsersList} />
-            <Stack.Screen name="Chat" component={ChatRoom} />
+            <Stack.Screen name="ChatRoom" component={ChatRoom} />
           </>
         ) : (
           <>

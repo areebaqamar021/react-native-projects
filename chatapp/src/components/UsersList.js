@@ -25,7 +25,7 @@ const UsersList = () => {
 
     const renderItem = ({ item }) => (
         <View style={styles.item}>
-            <TouchableOpacity onPress={() => navigation.navigate('Chat', { uid: item.uid })}>
+            <TouchableOpacity onPress={() => navigation.navigate('ChatRoom')}>
                 <Text>{item.name}</Text>
                 <Text>{item.email}</Text>
             </TouchableOpacity>
