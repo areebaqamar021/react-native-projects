@@ -18,7 +18,7 @@ const ChatRoom = ({ navigation }) => {
     const unsubscribe = getChatRooms()
       .then(setChatRooms)
       .catch(error => {
-        Alert.alert('Error', 'Failed to load chat rooms.');
+        Alert.alert('Error', 'Failed to load chat rooms.', error);
       });
     return () => unsubscribe();
   }, []);

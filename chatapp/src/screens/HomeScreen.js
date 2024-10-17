@@ -2,7 +2,7 @@ import { Text, StyleSheet, TextInput, View, TouchableOpacity } from 'react-nativ
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ChatRoomList from '../components/ChatRoomList';
+import ChatRoomList from '../components/ChatScreen';
 import Logout from './Logout';
 import auth from '@react-native-firebase/auth';
 
