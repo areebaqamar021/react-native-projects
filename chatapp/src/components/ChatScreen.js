@@ -1,13 +1,15 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {View, StyleSheet, Alert, SafeAreaView,} from 'react-native';
-import {GiftedChat} from 'react-native-gifted-chat';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, StyleSheet, Alert, SafeAreaView, TextInput, Button, FlatList, Text } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const ChatScreen = ({route}) => {
-  const {roomId, roomName} = route.params;
+const ChatScreen = ({ route }) => {
+  const { roomId } = route.params;
   const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
   const user = auth().currentUser;
+//   console.log("=====user", user);
+
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('chatRooms')
@@ -18,62 +20,124 @@ const ChatScreen = ({route}) => {
         querySnapshot => {
           const messagesFirestore = querySnapshot.docs.map(doc => {
             const firebaseData = doc.data();
-            const data = {
-              _id: doc.id,
-              text: '',
-              createdAt: new Date().getTime(),
-              ...firebaseData,
-            };
-            if (!firebaseData.system) {
-              data.user = {
-                _id: firebaseData.user._id,
+            return {
+              id: doc.id,
+              text: firebaseData.text,
+              createdAt: firebaseData.createdAt,
+              user: {
+                id: firebaseData.user._id,
                 name: firebaseData.user.name,
-              };
-            }
-            return data;
+              },
+            };
           });
           setMessages(messagesFirestore);
         },
         error => {
-          Alert.alert('Error', 'Failed to load messages.',error);
+          Alert.alert('Error', 'Failed to load messages.', error);
         },
       );
     return () => unsubscribe();
-  }, []);
+  }, [roomId]);
 
-  const onSend = useCallback((messages = []) => {
-    const writes = messages.map(m =>
-      firestore()
+  const sendMessage = useCallback(async () => {
+    if (newMessage.trim() === '') {
+      Alert.alert('Validation', 'Message cannot be empty.');
+      return;
+    }
+    const message = {
+      text: newMessage,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      user: {
+        _id: user.uid,
+        name: user.displayName || 'Anonymous',
+      },
+    };
+
+    try {
+      await firestore()
         .collection('chatRooms')
         .doc(roomId)
         .collection('messages')
-        .add({...m, createdAt: firestore.FieldValue.serverTimestamp()}),
-    );
-    Promise.all(writes).catch(err => {
-      Alert.alert('Error', 'Failed to send message.',err);
-    });
-  }, []);
+        .add(message);
+      setNewMessage(''); // Clear input after sending
+    } catch (err) {
+      Alert.alert('Error', 'Failed to send message.', err);
+    }
+  }, [newMessage, user.uid, roomId]);
+
+  const renderItem = ({ item }) => (
+    <View style={[styles.messageContainer, item.user.id === user.uid ? styles.myMessage : styles.otherMessage]}>
+      <Text style={styles.userName}>{item.user.name}:</Text>
+      <Text style={styles.messageText}>{item.text}</Text>
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
-    <GiftedChat
-      messages={messages}
-      onSend={messages => onSend(messages)}
-      user={{
-        _id: user.uid,
-        name: user.displayName || 'Anonymous',
-      }}
-    />
+      <FlatList
+        data={messages}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        inverted 
+      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Type your message..."
+          value={newMessage}
+          onChangeText={setNewMessage}
+        />
+        <Button title="Send" onPress={sendMessage} />
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }});
+  container: {
+    flex: 1,
+    padding: 10,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderTopWidth: 1,
+    borderColor: '#ccc',
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginRight: 10,
+  },
+  messageContainer: {
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    maxWidth: '80%',
+  },
+  myMessage: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#dcf8c6',
+  },
+  otherMessage: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#f1f1f1',
+  },
+  userName: {
+    fontWeight: 'bold',
+  },
+  messageText: {
+    marginTop: 2,
+  },
+});
 
 export default ChatScreen;
+
 
 
 

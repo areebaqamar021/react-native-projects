@@ -32,15 +32,15 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? "ChatRoom" : "Login"} >
+      <Stack.Navigator initialRouteName={user ? "Home" : "Login"} >
         {user ? (
           <>
-            {/* <Stack.Screen name="Home" component={HomeScreen}  options={{ //initialParams={{ user }}
+            <Stack.Screen name="Home" component={HomeScreen}  options={{ //initialParams={{ user }}
               headerRight: () => <TouchableOpacity>
                 <Icon name="ellipsis-vertical-sharp" size={20} />
               </TouchableOpacity>
-            }} /> */}
-            {/* <Stack.Screen name="Users" component={UsersList} /> */}
+            }} />
+            <Stack.Screen name="Users" component={UsersList} />
             <Stack.Screen name="ChatRoom" component={ChatRoom} />
             <Stack.Screen name="Chat" component={ChatScreen} />
           </>

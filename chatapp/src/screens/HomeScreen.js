@@ -2,22 +2,21 @@ import { Text, StyleSheet, TextInput, View, TouchableOpacity } from 'react-nativ
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ChatRoomList from '../components/ChatScreen';
 import Logout from './Logout';
 import auth from '@react-native-firebase/auth';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
-    // const [currentUserId, setCurrentUserId] = useState(null);
+    const [currentUserId, setCurrentUserId] = useState(null);
 
-    // useEffect(() => {
-    //     const user = auth().currentUser;
-    //     if (user) {
-    //         setCurrentUserId(user.uid);
-    //     } else {
-    //         console.error("User is not logged in.");
-    //     }
-    // }, []);
+    useEffect(() => {
+        const user = auth().currentUser;
+        if (user) {
+            setCurrentUserId(user.uid);
+        } else {
+            console.error("User is not logged in.");
+        }
+    }, []);
   
     return (
         <View style={styles.container}>
@@ -25,13 +24,13 @@ const HomeScreen = () => {
                 style={styles.searchBar}
                 placeholder="Search Users..."
             />
+            <Logout />
             {/* {currentUserId ? (
                 <ChatRoomList userId={currentUserId} navigation={props.navigation} />
             ) : (
                 <Text>User not logged in</Text>
             )} */}
-            <Logout />
-            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Users')}>
+            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ChatRoom')}>
                 <Icon name="add-box" size={50} />
             </TouchableOpacity>
         </View>
