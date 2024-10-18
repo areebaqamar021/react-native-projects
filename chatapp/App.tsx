@@ -9,7 +9,6 @@ import UsersList from './src/components/UsersList';
 import ChatRoom from './src/components/ChatRoom';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ChatScreen from './src/components/ChatScreen';
 
 const Stack = createNativeStackNavigator();
 
