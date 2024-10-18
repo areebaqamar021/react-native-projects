@@ -1,6 +1,6 @@
 // ChatRoom.js
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, FlatList, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, TextInput, Button, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
@@ -18,10 +18,14 @@ const ChatRoom = ({ route }) => {
       .onSnapshot(querySnapshot => {
         const fetchedMessages = [];
         querySnapshot.forEach(doc => {
-          fetchedMessages.push({
-            id: doc.id,
-            ...doc.data(),
-          });
+          const messageData = doc.data();
+          // Only push messages that have a createdAt timestamp to avoid incomplete data rendering
+          if (messageData.createdAt) {
+            fetchedMessages.push({
+              id: doc.id,
+              ...messageData,
+            });
+          }
         });
         setMessages(fetchedMessages);
       });
@@ -39,16 +43,15 @@ const ChatRoom = ({ route }) => {
         .collection('messages')
         .add({
           text: message,
-          createdAt: firestore.FieldValue.serverTimestamp(),
+          createdAt: firestore.FieldValue.serverTimestamp(),  // Ensure that this is properly sent
           senderId: currentUser.uid,
         });
 
-      setMessage('');
+      setMessage('');  // Clear the message input after sending
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
     <View style={styles.container}>
       <FlatList
         data={messages}
@@ -79,7 +82,6 @@ const ChatRoom = ({ route }) => {
         </TouchableOpacity>
       </View>
     </View>
-    </SafeAreaView>
   );
 };
 

@@ -51,7 +51,7 @@ const HomeScreen = () => {
                 style={styles.searchBar}
                 placeholder="Search Users..."
             />
-            <FlatList
+            {/* <FlatList
                 data={chatUsers}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
@@ -59,7 +59,7 @@ const HomeScreen = () => {
                         <Text>Chat with {item.otherUser}</Text>
                     </TouchableOpacity>
                 )}
-            />
+            /> */}
             <Logout />
             {/* {currentUserId ? (
                 <ChatRoomList userId={currentUserId} navigation={props.navigation} />
