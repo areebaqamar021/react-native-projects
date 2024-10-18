@@ -30,7 +30,7 @@ const HomeScreen = () => {
             ) : (
                 <Text>User not logged in</Text>
             )} */}
-            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ChatRoom')}>
+            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Users', {currentUserId})}>
                 <Icon name="add-box" size={50} />
             </TouchableOpacity>
         </View>

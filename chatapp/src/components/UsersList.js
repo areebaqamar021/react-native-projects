@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { getAllUsers } from '../services/firestoreService';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
 const UsersList = () => {
@@ -13,19 +13,27 @@ const UsersList = () => {
             try {
                 const usersData = await getAllUsers();
                 const currentUser = auth().currentUser;
-                const filteredUser = usersData.filter((user) => user.id !== currentUser.uid)
-                // console.log("====", filteredUser)
+                const filteredUser = usersData.filter((user) => user.id !== currentUser.uid);
                 setUsers(filteredUser);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
-        }
+        };
         fetchUsers();
-    }, [])
+    }, []);
+
+    // Function to generate room ID
+    const generateRoomId = (userId1, userId2) => {
+        return userId1 < userId2 ? `${userId1}_${userId2}` : `${userId2}_${userId1}`;
+    };
 
     const renderItem = ({ item }) => (
         <View style={styles.item}>
-            <TouchableOpacity onPress={() => navigation.navigate('ChatRoom')}>
+            <TouchableOpacity onPress={() => {
+                const currentUser = auth().currentUser;
+                const roomId = generateRoomId(currentUser.uid, item.id); // Generate the room ID
+                navigation.navigate('Chat', { roomId }); // Navigate to ChatScreen
+            }}>
                 <Text>{item.name}</Text>
                 <Text>{item.email}</Text>
             </TouchableOpacity>
@@ -41,10 +49,10 @@ const UsersList = () => {
                 contentContainerStyle={styles.listContainer}
             />
         </View>
-    )
-}
+    );
+};
 
-export default UsersList
+export default UsersList;
 
 const styles = StyleSheet.create({
     container: {
@@ -62,4 +70,4 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ddd',
     },
-})
+});
