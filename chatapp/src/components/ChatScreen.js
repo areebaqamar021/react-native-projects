@@ -3,8 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { View, StyleSheet, Alert, FlatList } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import Message from './Message';
-import Input from './Input';
+import { TextInput } from 'react-native-gesture-handler';
 
 const ChatScreen = ({ route }) => {
     const { userId } = route.params;
@@ -20,7 +19,6 @@ const ChatScreen = ({ route }) => {
     console.log("Authenticated User ID:", user.uid);
 
     useEffect(() => {
-        // Generate room ID based on user IDs
         const generateRoomId = (id1, id2) => (id1 < id2 ? `${id1}_${id2}` : `${id2}_${id1}`);
         console.log(generateRoomId);
         setRoomId(generateRoomId(user.uid, userId));
@@ -75,7 +73,18 @@ const ChatScreen = ({ route }) => {
     }, [roomId, user.uid]);
 
     const renderItem = ({ item }) => (
-        <Message message={item} currentUserId={user.uid} />
+        <View style={{ flexDirection: 'row', padding: 10 }}>
+            <View
+                style={{
+                    backgroundColor: '#f1f1f1',
+                    padding: 10,
+                    borderRadius: 5,
+                    maxWidth: '80%',
+                }}
+            >
+                <Text>{item.text}</Text>
+            </View>
+        </View>
     );
 
     return (
@@ -84,9 +93,12 @@ const ChatScreen = ({ route }) => {
                 data={messages}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-                inverted // Show the latest message at the bottom
+                inverted
             />
-            <Input onSend={sendMessage} />
+            <TextInput>
+                placeholder="Type a message"
+                onSubmitEditing={({ nativeEvent }) => sendMessage(nativeEvent.text)}
+            </TextInput>
         </View>
     );
 };

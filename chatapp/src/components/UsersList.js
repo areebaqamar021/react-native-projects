@@ -22,17 +22,12 @@ const UsersList = () => {
         fetchUsers();
     }, []);
 
-    // Function to generate room ID
-    const generateRoomId = (userId1, userId2) => {
-        return userId1 < userId2 ? `${userId1}_${userId2}` : `${userId2}_${userId1}`;
-    };
 
     const renderItem = ({ item }) => (
         <View style={styles.item}>
             <TouchableOpacity onPress={() => {
                 const currentUser = auth().currentUser;
-                const roomId = generateRoomId(currentUser.uid, item.id); // Generate the room ID
-                navigation.navigate('Chat', { roomId }); // Navigate to ChatScreen
+                navigation.navigate('ChatRoom', { userId: item.id, currentUserId: currentUser.uid }); 
             }}>
                 <Text>{item.name}</Text>
                 <Text>{item.email}</Text>

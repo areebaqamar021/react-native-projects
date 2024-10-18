@@ -7,7 +7,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import auth from '@react-native-firebase/auth';
 import UsersList from './src/components/UsersList';
 import ChatRoom from './src/components/ChatRoom';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ChatScreen from './src/components/ChatScreen';
 

@@ -1,257 +1,137 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Button,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  SafeAreaView,
-} from 'react-native';
-import { getChatRooms, createChatRoom } from '../services/firestoreService';
+// ChatRoom.js
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Button, FlatList, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
-const ChatRoom = ({ navigation }) => {
-  const [chatRooms, setChatRooms] = useState([]);
-  const [newRoomName, setNewRoomName] = useState('');
+const ChatRoom = ({ route }) => {
+  const { chatId, otherUserId } = route.params;
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    let isMounted = true;
-  
-    const unsubscribe = getChatRooms(setChatRooms);
-  
-    return () => {
-      isMounted = false;
-      unsubscribe();
-    };
-  }, []);
-  
+    const unsubscribe = firestore()
+      .collection('chats')
+      .doc(chatId)
+      .collection('messages')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot(querySnapshot => {
+        const fetchedMessages = [];
+        querySnapshot.forEach(doc => {
+          fetchedMessages.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+        setMessages(fetchedMessages);
+      });
 
+    return unsubscribe;
+  }, [chatId]);
 
-  const handleCreateRoom = async () => {
-    if (newRoomName.trim() === '') {
-      Alert.alert('Validation', 'Room name cannot be empty.');
-      return;
-    }
-    try {
-      const roomRef = await createChatRoom(newRoomName);
-      setNewRoomName('');
-      navigation.navigate('Chat', { roomId: roomRef.id, roomName: newRoomName });
-    } catch (error) {
-      Alert.alert('Error', 'Failed to create chat room.', error.message);
+  const sendMessage = async () => {
+    const currentUser = auth().currentUser;
+
+    if (message.length > 0) {
+      await firestore()
+        .collection('chats')
+        .doc(chatId)
+        .collection('messages')
+        .add({
+          text: message,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          senderId: currentUser.uid,
+        });
+
+      setMessage('');
     }
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.roomItem}
-      onPress={() =>
-        navigation.navigate('Chat', { roomId: item.id, roomName: item.name })
-      }>
-
-      <Text style={styles.roomName}>{item.name}</Text>
-    </TouchableOpacity>
-  );
   return (
     <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <FlatList
-        data={chatRooms}
+        data={messages}
+        inverted
         keyExtractor={item => item.id}
-        renderItem={renderItem}
-        ListEmptyComponent={<Text>No chat rooms available. Create one!</Text>}
+        renderItem={({ item }) => (
+          <View
+            style={[
+              styles.messageContainer,
+              item.senderId === auth().currentUser.uid ? styles.myMessage : styles.otherMessage,
+            ]}
+          >
+            <Text style={styles.messageText}>
+              {item.senderId === auth().currentUser.uid ? 'Me' : otherUserId}: {item.text}
+            </Text>
+          </View>
+        )}
       />
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          placeholder="New Chat Room"
-          value={newRoomName}
-          onChangeText={setNewRoomName}
+          placeholder="Type a message"
+          value={message}
+          onChangeText={setMessage}
         />
-        <Button style={styles.button} title="Create" onPress={handleCreateRoom} />
+        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <Text style={styles.sendButtonText}>Send</Text>
+        </TouchableOpacity>
       </View>
+    </View>
     </SafeAreaView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16
+    backgroundColor: '#f5f5f5',
   },
-  roomItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
+  messageContainer: {
+    padding: 10,
+    margin: 10,
+    borderRadius: 8,
+    maxWidth: '80%',
   },
-  roomName: {
-    fontSize: 18
+  myMessage: {
+    backgroundColor: '#dcf8c6',
+    alignSelf: 'flex-end',
+  },
+  otherMessage: {
+    backgroundColor: '#fff',
+    alignSelf: 'flex-start',
+  },
+  messageText: {
+    fontSize: 16,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 10
+    padding: 10,
+    borderTopWidth: 1,
+    borderColor: '#e1e1e1',
+    backgroundColor: '#fff',
   },
   input: {
     flex: 1,
     height: 40,
-    borderColor: '#ccc',
+    borderColor: '#ddd',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 20,
     paddingHorizontal: 10,
     marginRight: 10,
   },
+  sendButton: {
+    backgroundColor: '#0b93f6',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+  },
+  sendButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
 });
+
 export default ChatRoom;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-// import React, { useState, useEffect, useRef } from 'react';
-// import { sendMessage, getMessages, createOrGetChatRoom } from '../services/firestoreService';
-// import auth from '@react-native-firebase/auth';
-
-// const ChatRoom = ({ route }) => {
-//   const params = route.params;
-//   const [input, setInput] = useState('');
-//   const [messages, setMessages] = useState([]);
-//   const [currentUser, setCurrentUser] = useState(null);
-//   const flatListRef = useRef(null); 
-
-//   useEffect(() => {
-//     const user = auth().currentUser;
-//     if (user) {
-//       setCurrentUser(user);
-//     } else {
-//       console.error("Current user is not logged in");
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     if (!currentUser) return;
-
-//     const unsubscribe = getMessages(params?.senderId, params?.recieverId, (fetchedMessages) => {
-//       setMessages(fetchedMessages);
-//       if (!fetchedMessages.length) {
-//         createOrGetChatRoom(params, currentUser); 
-//       }
-//       flatListRef.current?.scrollToEnd({ animated: true });
-//     });
-
-//     return () => unsubscribe(); 
-//   }, [currentUser, params]);
-
-//   const handleMessage = async () => {
-//     if (!currentUser) {
-//       console.error("Cannot send message; no current user");
-//       return;
-//     }
-//     try {
-//       await sendMessage(input, params.senderId, params.receiverId);
-//       setInput('');
-//     } catch (e) {
-//       console.error(["Error sending message", e]);
-//     }
-//   };
-
-//   const renderItem = ({ item }) => {
-//     const isCurrentUser = item.senderId === currentUser.uid;
-//     return (
-//       <View style={[styles.messageContainer, isCurrentUser ? styles.sentMessage : styles.receivedMessage]}>
-//         <Text style={styles.messageText}>{item.text}</Text>
-//       </View>
-//     );
-//   };
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <FlatList
-//         ref={flatListRef}
-//         data={messages}
-//         renderItem={renderItem}
-//         keyExtractor={(item) => item.id}
-//         contentContainerStyle={{ paddingBottom: 20 }}
-//         onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}  // Auto-scroll when content changes
-//       />
-//       <View style={styles.inputContainer}>
-//         <TextInput
-//           style={styles.input}
-//           value={input}
-//           onChangeText={setInput}
-//           placeholder="Type a message"
-//         />
-//         <TouchableOpacity style={styles.button} onPress={handleMessage}>
-//           <Text style={styles.buttonText}>Send</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </SafeAreaView>
-//   );
-// };
-
-// export default ChatRoom;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'flex-end',
-//   },
-//   inputContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     padding: 10,
-//     backgroundColor: '#fff',
-//     borderTopWidth: 1,
-//     borderTopColor: '#ccc',
-//   },
-//   input: {
-//     flex: 1,
-//     borderWidth: 1,
-//     borderColor: '#ccc',
-//     borderRadius: 5,
-//     padding: 10,
-//     marginRight: 10,
-//   },
-//   button: {
-//     backgroundColor: '#007BFF',
-//     borderRadius: 5,
-//     padding: 10,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     width: 70,
-//   },
-//   buttonText: {
-//     color: '#fff',
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//   },
-//   messageContainer: {
-//     maxWidth: '75%',
-//     padding: 10,
-//     marginVertical: 5,
-//     borderRadius: 15,
-//   },
-//   receivedMessage: {
-//     alignSelf: 'flex-start',
-//     backgroundColor: '#e1e1e1',
-//     marginLeft: 20,
-//   },
-//   sentMessage: {
-//     alignSelf: 'flex-end',
-//     backgroundColor: '#007BFF',
-//     marginRight: 20,
-//   },
-//   messageText: {
-//     fontSize: 16,
-//     color: '#000',
-//   },
-// });
