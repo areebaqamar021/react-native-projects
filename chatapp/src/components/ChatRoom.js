@@ -1,6 +1,6 @@
 // ChatRoom.js
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, Button, FlatList, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
@@ -19,7 +19,6 @@ const ChatRoom = ({ route }) => {
         const fetchedMessages = [];
         querySnapshot.forEach(doc => {
           const messageData = doc.data();
-          // Only push messages that have a createdAt timestamp to avoid incomplete data rendering
           if (messageData.createdAt) {
             fetchedMessages.push({
               id: doc.id,
@@ -52,6 +51,7 @@ const ChatRoom = ({ route }) => {
   };
 
   return (
+    <SafeAreaView style={styles.container}>
     <View style={styles.container}>
       <FlatList
         data={messages}
@@ -82,6 +82,7 @@ const ChatRoom = ({ route }) => {
         </TouchableOpacity>
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 
