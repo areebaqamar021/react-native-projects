@@ -2,7 +2,7 @@ import { StyleSheet, SafeAreaView, TextInput, Text, TouchableOpacity } from 'rea
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import { addUser } from '../services/firestoreService'; // Import the addUser function
+import { addUser } from '../services/firestoreService';
 
 const SignUp = () => {
   const [name, setName] = useState('');
