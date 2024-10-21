@@ -8,7 +8,6 @@ import {
   Image,
   FlatList,
   View,
-  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -56,9 +55,11 @@ const MessageScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar />
+      <StatusBar barStyle="dark-content" />
       <View style={styles.header}>
-        <Button title="Logout" onPress={handleLogout} />
+        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+          <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
       </View>
       <FlatList
         data={users}
@@ -88,50 +89,63 @@ const MessageScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff', 
+    paddingHorizontal: 10,
   },
   header: {
     width: '100%',
     padding: 10,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#fff', 
     alignItems: 'flex-end',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+  },
+  logoutButton: {
+    padding: 10,
+    backgroundColor: '#000', 
+    borderRadius: 5,
+  },
+  logoutText: {
+    color: '#fff', 
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   card: {
     width: '100%',
-    height: 'auto',
-    marginHorizontal: 4,
-    marginVertical: 6,
+    paddingVertical: 10,
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    alignItems: 'center',
+    backgroundColor: '#fff', 
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc', 
+    marginVertical: 5,
   },
   userImageST: {
     width: 50,
     height: 50,
     borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#000', 
   },
   textArea: {
-    flexDirection: 'column',
+    flex: 1,
+    paddingLeft: 15,
     justifyContent: 'center',
-    padding: 5,
-    paddingLeft: 10,
-    width: 300,
-    backgroundColor: 'transparent',
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
   },
   nameText: {
-    fontSize: 14,
-    fontWeight: '900',
-    fontFamily: 'Verdana',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
   },
   msgTime: {
-    textAlign: 'right',
-    fontSize: 11,
-    marginTop: -20,
+    fontSize: 12,
+    color: '#666', 
+    marginTop: 2,
   },
   msgContent: {
-    paddingTop: 5,
+    fontSize: 14,
+    color: '#000',
+    marginTop: 4,
   },
 });
 

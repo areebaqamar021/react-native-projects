@@ -1,229 +1,181 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import {
-    View,
-    Text,
-    Button,
-    Dimensions,
-    StyleSheet,
-    TouchableOpacity,
-    Platform,
-    TextInput,
-    ScrollView
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  Platform,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-export default SignupScreen = ({navigation}) => {
+export default SignupScreen = ({ navigation }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [data, setData] = useState({
+    secureTextEntry: true,
+  });
 
-    const [user, setUser] = useState({});
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [data, setData] = React.useState({
-        email: '',
-        password: '',
-        check_textInputChange: false,
-        secureTextEntry: true
+  const updateSecureText = () => {
+    setData({
+      secureTextEntry: !data.secureTextEntry,
     });
-    const textInputChange = (val) => {
-        if( val.length >= 10){
-            setData ({
-                ... data,
-                email: val,
-                check_textInputChange: true
-            });
-        } else {
-               setData ({
-                ... data,
-                email: val,
-                check_textInputChange: false
-            });
-        }
+  };
+
+  // Register user
+  const userRegistration = async () => {
+    setError('');
+
+    if (password === '' || confirmPassword === '') {
+      setError('Please fill in all fields.');
+      return;
     }
 
-    const handlePassword = (val) => {
-        setData({
-            ... data,
-            password: val
-        });
+    if (password !== confirmPassword) {
+      setError('Passwords do not match!');
+      return;
     }
 
-    const updateSecureText = () => {
-        setData({
-           secureTextEntry: !data.secureTextEntry 
-        });
+    if (!email || !password || !name) {
+      alert('Please fill out the empty fields');
+      return;
     }
-
-    //Register user
-    const userRegistration = async () => {
-      if(!email || !password || !name) {
-        alert("Please fill out the empty fields")
-      }
-      try{
-        const newReg = await auth().createUserWithEmailAndPassword(email,password)
-        firestore().collection('users').doc(newReg.user.uid).set({
-          name: name,
-          email: newReg.user.email,
-          uid: newReg.user.uid
-        })
-         }catch(err){
-        alert('Registration Unsuccessful! Try again');
-
-      }
+    try {
+      const newReg = await auth().createUserWithEmailAndPassword(email, password);
+      await firestore().collection('users').doc(newReg.user.uid).set({
+        name: name,
+        email: newReg.user.email,
+        uid: newReg.user.uid,
+      });
+      alert('Registration successful');
+    } catch (err) {
+      alert('Registration Unsuccessful! Try again');
     }
+  };
 
-    return (
-        <View style={[styles.container, {
-            paddingTop: 35
-        }]}>
-            <View style={styles.header}>
-                <Text style={styles.text_header}>Sign up</Text>
-                <Text style={styles.headerTitle}>Input your Email address and Password in the form below to Register.</Text>
-            </View>
-            <View style={styles.footer}>
-                
-                <Text style={[styles.text_footer, {
-                    marginTop: 25
-                }]}>Full Name</Text>
-                <View style={styles.action}>
-                    <TextInput
-                        placeholder="Your Full Name"
-                        style={styles.textInput}
-                        autoCapitalize="none"
-                        value={name}
-                        onChangeText={setName}
-                    />
-                </View>
-                <Text style={[styles.text_footer, {
-                    marginTop: 25
-                }]}>Email</Text>
-                <View style={styles.action}>
-                    <TextInput
-                        placeholder="Your Email"
-                        style={styles.textInput}
-                        autoCapitalize="none"
-                        value={email}
-                        onChangeText={setEmail}
-                    />
-                </View>
-                <Text style={[styles.text_footer, {
-                  marginTop: 25
-                }]}>Password</Text>
-                <View style={styles.action}>
-                  <TextInput
-                      placeholder="Your Password"
-                      secureTextEntry={data.secureTextEntry ? true : false}
-                      style={styles.textInput}
-                      autoCapitalize="none"
-                      value={password}
-                      onChangeText={setPassword}
-                  />
-                  <TouchableOpacity
-                      onPress={updateSecureText}
-                  >
-                      {data.secureTextEntry ? 
-                      <Text>Show</Text>
-                      :
-                      <Text>Hide</Text>
-                      } 
-                  </TouchableOpacity>
-                </View>
-
-               
-                    <TouchableOpacity
-                        onPress={()=>userRegistration()}
-                        style={[styles.signIn, {
-                            borderColor: '#009387',
-                            borderWidth: 1,
-                            marginTop: 15,
-                        }]}
-                    >
-
-                        <Text style={[styles.textSign, {
-                            color: '#009387'
-                        }]}> Sign up </Text>
-
-                    </TouchableOpacity>
-                    <View style={{marginTop: 10, alignItems: 'center'}}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('Signin')}><Text style={styles.text_footer}>Already have an account? Sign in</Text></TouchableOpacity>
-                    </View> 
-                </View>
-
-            </View>
-    );
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Sign up</Text>
+      <TextInput
+        placeholder="Full Name"
+        style={styles.textInput}
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        placeholder="Email"
+        style={styles.textInput}
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          placeholder="Password"
+          secureTextEntry={data.secureTextEntry}
+          style={styles.passwordInput}
+          value={password}
+          onChangeText={setPassword}
+          autoCapitalize="none"
+        />
+        <TouchableOpacity onPress={updateSecureText} style={styles.showHideButton}>
+          <Text style={styles.showHideText}>
+            {data.secureTextEntry ? 'Show' : 'Hide'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          placeholder="Confirm Password"
+          secureTextEntry={data.secureTextEntry}
+          style={styles.passwordInput}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          autoCapitalize="none"
+        />
+        <TouchableOpacity onPress={updateSecureText} style={styles.showHideButton}>
+          <Text style={styles.showHideText}>
+            {data.secureTextEntry ? 'Show' : 'Hide'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      <TouchableOpacity style={styles.button} onPress={userRegistration}>
+        <Text style={styles.buttonText}>Sign up</Text>
+      </TouchableOpacity>
+      <Text style={styles.link}>Already Don't have an account? {''}
+      <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
+        <Text style={styles.linkText}>Sign in</Text>
+      </TouchableOpacity>
+      </Text>
+    </View>
+  );
 };
 
-
-
- const {height} = Dimensions.get("screen");
- const height_logo = height * 0.28;
-
- const styles = StyleSheet.create({ 
-container: {
-     flex: 1,
-     backgroundColor: '#009387'
-   },
-   header: {
-     flex: 1,
-     justifyContent: 'flex-end',
-     paddingHorizontal: 20,
-     paddingBottom: 50
-     },
-   footer: {
-     flex: 3,
-     backgroundColor: '#fff',
-     borderTopLeftRadius: 30,
-     borderTopRightRadius: 30,
-     paddingVertical: 20,
-     paddingHorizontal: 30
-   },
-   text_header: {
-     color: '#fff',
-     fontWeight: 'bold',
-     fontSize: 30
-   },
-   text_footer: {
-     color: '#05375a',
-     fontSize: 18
-   },
-   title: {
-     color: '#05375a',
-     fontSize: 14,
-     fontWeight: 'bold'
-   },
-   headerTitle: {
-     paddingTop: 5,
-     color: '#fff',
-     fontSize: 14,
-     fontWeight: 'bold'
-   },
-   action: {
-     flexDirection: 'row',
-     marginTop: 10,
-     borderBottomWidth: 1,
-     borderBottomColor: '#f2f2f2',
-     paddingBottom: 5
-   },
-   textInput: { 
-     flex: 1,
-     marginTop: Platform.OS === 'ios' ? 0 : -12,
-     paddingLeft: 10,
-     color: '#05375a',
-   },
-   button: {
-     alignItems: 'center',
-     marginTop: 50
-   },
-   signIn: {
-     width: '100%',
-     height: 50,
-     justifyContent: 'center',
-     alignItems: 'center',
-     borderRadius: 10,
-   },
-   textSign: {
-     fontSize: 18,
-     fontWeight: 'bold'
-   }
-
- })
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  textInput: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 5,
+    color: '#000',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',  
+    marginBottom: 20,
+    overflow: 'hidden', 
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 10,
+    color: '#000',
+  },
+  showHideButton: {
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+  },
+  showHideText: {
+    color: '#007BFF',
+  },
+  button: {
+    backgroundColor: '#000',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  link: {
+    marginTop: 10,
+    textAlign: 'center'
+  },
+  linkText: {
+    color: '#0EA5E9',
+    textDecorationLine: 'underline',
+  },
+});

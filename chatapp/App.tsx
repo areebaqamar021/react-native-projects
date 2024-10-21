@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import auth from '@react-native-firebase/auth';
 import ProfileScreen from './src/screen/ProfileScreen';
 import ChatScreen from './src/screen/ChatScreen';
@@ -34,8 +33,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: '#009387' },
-          headerTintColor: '#fff',
+          headerStyle: { backgroundColor: '#ccc' },
+          headerTintColor: '#000',
           headerTitleStyle: { fontWeight: 'bold' },
         }}
       >
@@ -44,12 +43,12 @@ const App = () => {
             <Stack.Screen
               name="Messages"
               component={MessageScreen}
-              initialParams={{ user }} // Pass user prop if needed
+              initialParams={{ user }}
             />
             <Stack.Screen
               name="Profile"
               component={ProfileScreen}
-              initialParams={{ user }} // Pass user prop if needed
+              initialParams={{ user }} 
             />
             <Stack.Screen
               name="Chats"
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   iconColor: {
-    color: '#009387', // Corrected color code format
+    color: '#009387',
   },
 });
 

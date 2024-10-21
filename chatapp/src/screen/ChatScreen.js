@@ -16,12 +16,10 @@ const ChatScreen = ({ user, route }) => {
   const [inputMessage, setInputMessage] = useState('');
   const { uid } = route.params;
 
-  // Generate a unique chat ID based on users
   const getChatId = () => {
     return uid > user.uid ? `${user.uid}-${uid}` : `${uid}-${user.uid}`;
   };
 
-  // Function to fetch all messages
   const getAllMessages = async () => {
     const docId = getChatId();
     const msgResponse = await firestore()
@@ -43,9 +41,8 @@ const ChatScreen = ({ user, route }) => {
     getAllMessages();
   }, []);
 
-  // Function to send a message
   const sendMessage = async () => {
-    if (inputMessage.trim() === '') return; // Avoid sending empty messages
+    if (inputMessage.trim() === '') return; 
 
     const docId = getChatId();
     const message = {
@@ -55,10 +52,8 @@ const ChatScreen = ({ user, route }) => {
       createdAt: new Date(),
     };
 
-    // Update the UI with the new message
     setMessages(prevMessages => [message, ...prevMessages]);
 
-    // Save message to Firestore
     await firestore()
       .collection('Chats')
       .doc(docId)
@@ -68,11 +63,9 @@ const ChatScreen = ({ user, route }) => {
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
 
-    // Clear the input field
     setInputMessage('');
   };
 
-  // Rendering a single message
   const renderMessage = ({ item }) => {
     const isSentByUser = item.sentBy === user.uid;
     return (
@@ -90,15 +83,12 @@ const ChatScreen = ({ user, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
-      {/* Message List */}
       <FlatList
         data={messages}
-        inverted // Newest messages at the bottom
+        inverted 
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderMessage}
       />
-
-      {/* Input Toolbar */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -116,7 +106,6 @@ const ChatScreen = ({ user, route }) => {
 
 export default ChatScreen;
 
-// Styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
