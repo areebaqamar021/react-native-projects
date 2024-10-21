@@ -10,10 +10,9 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth'; // Import Firebase Auth
+import auth from '@react-native-firebase/auth';
 
 Icon.loadFont().then();
 
@@ -47,7 +46,7 @@ const MessageScreen = ({ route, navigation }) => {
   const handleLogout = async () => {
     try {
       await auth().signOut();
-      navigation.navigate('Signin'); 
+      navigation.navigate('Signin');
     } catch (error) {
       console.error('Error signing out: ', error);
     }
@@ -75,8 +74,8 @@ const MessageScreen = ({ route, navigation }) => {
               />
               <View style={styles.textArea}>
                 <Text style={styles.nameText}>{item.name}</Text>
-                <Text style={styles.msgTime}>{item.messageTime}</Text>
                 <Text style={styles.msgContent}>{item.email}</Text>
+                <Text style={styles.msgTime}>{item.messageTime}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -89,43 +88,43 @@ const MessageScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff', 
+    backgroundColor: '#fff',
     paddingHorizontal: 10,
   },
   header: {
     width: '100%',
     padding: 10,
-    backgroundColor: '#fff', 
+    backgroundColor: '#fff',
     alignItems: 'flex-end',
     borderBottomWidth: 1,
     borderBottomColor: '#000',
   },
   logoutButton: {
     padding: 10,
-    backgroundColor: '#000', 
+    backgroundColor: '#000',
     borderRadius: 5,
   },
   logoutText: {
-    color: '#fff', 
+    color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
   },
   card: {
     width: '100%',
-    paddingVertical: 10,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff', 
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc', 
-    marginVertical: 5,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    margin: 5,
   },
   userImageST: {
     width: 50,
     height: 50,
     borderRadius: 25,
     borderWidth: 1,
-    borderColor: '#000', 
+    borderColor: '#000',
   },
   textArea: {
     flex: 1,
@@ -136,16 +135,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
+    marginTop: 5,
   },
   msgTime: {
     fontSize: 12,
-    color: '#666', 
+    color: '#666',
     marginTop: 2,
   },
   msgContent: {
     fontSize: 14,
     color: '#000',
     marginTop: 4,
+    marginBottom: 0,
   },
 });
 

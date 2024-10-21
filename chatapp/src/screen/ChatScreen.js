@@ -42,7 +42,7 @@ const ChatScreen = ({ user, route }) => {
   }, []);
 
   const sendMessage = async () => {
-    if (inputMessage.trim() === '') return; 
+    if (inputMessage.trim() === '') return;
 
     const docId = getChatId();
     const message = {
@@ -85,7 +85,7 @@ const ChatScreen = ({ user, route }) => {
       <StatusBar />
       <FlatList
         data={messages}
-        inverted 
+        inverted
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderMessage}
       />
@@ -109,7 +109,7 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
   },
   messageContainer: {
     margin: 10,
@@ -119,11 +119,11 @@ const styles = StyleSheet.create({
   },
   messageSent: {
     alignSelf: 'flex-end',
-    backgroundColor: '#009387',
+    backgroundColor: '#007BFF',
   },
   messageReceived: {
     alignSelf: 'flex-start',
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#333',
   },
   messageText: {
     color: '#fff',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   sendButton: {
     justifyContent: 'center',
     paddingHorizontal: 15,
-    backgroundColor: '#009387',
+    backgroundColor: '#000',
     borderRadius: 20,
   },
   sendButtonText: {
@@ -155,3 +155,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+

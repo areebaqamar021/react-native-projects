@@ -14,8 +14,6 @@ export default SignupScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
   const [data, setData] = useState({
     secureTextEntry: true,
   });
@@ -28,18 +26,6 @@ export default SignupScreen = ({ navigation }) => {
 
   // Register user
   const userRegistration = async () => {
-    setError('');
-
-    if (password === '' || confirmPassword === '') {
-      setError('Please fill in all fields.');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError('Passwords do not match!');
-      return;
-    }
-
     if (!email || !password || !name) {
       alert('Please fill out the empty fields');
       return;
@@ -60,6 +46,7 @@ export default SignupScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign up</Text>
+
       <TextInput
         placeholder="Full Name"
         style={styles.textInput}
@@ -88,13 +75,13 @@ export default SignupScreen = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.passwordContainer}>
+      {/* <View style={styles.passwordContainer}>
         <TextInput
           placeholder="Confirm Password"
           secureTextEntry={data.secureTextEntry}
           style={styles.passwordInput}
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
+          value={password}
+          onChangeText={setPassword}
           autoCapitalize="none"
         />
         <TouchableOpacity onPress={updateSecureText} style={styles.showHideButton}>
@@ -102,8 +89,7 @@ export default SignupScreen = ({ navigation }) => {
             {data.secureTextEntry ? 'Show' : 'Hide'}
           </Text>
         </TouchableOpacity>
-      </View>
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      </View> */}
       <TouchableOpacity style={styles.button} onPress={userRegistration}>
         <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>

@@ -70,7 +70,7 @@ const SigninScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <Text style={styles.link}>Don't have an account? {''}
-        <TouchableOpacity onPress={() => navigation.push('Signup')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.linkText}>
             SignUp
           </Text>
