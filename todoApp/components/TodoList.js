@@ -15,7 +15,7 @@ const TodoList = () => {
 
     setInput('');
   }
-
+  
   const updateTask = () => {
     if (input.trim() === '' || editIndex === null) return;
     const updatedTasks = tasks.map((item, index) =>
@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   taskContainer: {
-    flexDirection: 'row-reverse', // Reverse the row to put text on the right
-    alignItems: 'center', // Center vertically
+    flexDirection: 'row-reverse', 
+    alignItems: 'center', 
     padding: 15,
     backgroundColor: '#ffffff',
     borderRadius: 10,
@@ -131,19 +131,19 @@ const styles = StyleSheet.create({
   editDeleteContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 10, // Space between buttons and text
+    marginRight: 10, 
   },
   taskText: {
     fontSize: 16,
     color: '#333',
-    flex: 1, // Allow text to take the remaining space
-    overflow: 'hidden', // Prevent text overflow
-    textOverflow: 'ellipsis', // Show ellipsis if text overflows (for web)
+    flex: 1, 
+    overflow: 'hidden', 
+    textOverflow: 'ellipsis', 
   },
   editDeleteText: {
     color: '#007BFF',
     fontWeight: '600',
-    marginRight: 10, // Space between buttons
+    marginRight: 10, 
   },
   editButton: {
     marginRight: 10,
