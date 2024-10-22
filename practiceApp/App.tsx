@@ -10,7 +10,12 @@ const Stack = createNativeStackNavigator();
 const App = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Start">
+            <Stack.Navigator 
+            screenOptions={{
+              headerStyle: { backgroundColor: '#007bff' },
+              headerTintColor: '#fff',
+              headerTitleStyle: { fontWeight: 'bold' },
+            }} initialRouteName="Start">
             <Stack.Screen name="Start" component={StartScreen} />
                 <Stack.Screen name="Quiz" component={QuizScreen} />
                 <Stack.Screen name="Results" component={ResultsScreen} />
