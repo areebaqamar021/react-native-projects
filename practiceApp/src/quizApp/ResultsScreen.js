@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const ResultsScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Quiz Finished!</Text>
-            <Button title="Back to Quiz" onPress={() => navigation.navigate('Start')} />
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Start')}>
+                <Text style={styles.buttonText}>Start Over</Text>
+            </TouchableOpacity>    
         </View>
     );
 };
@@ -22,6 +24,18 @@ const styles = StyleSheet.create({
         fontSize: 24,
         marginBottom: 20,
         color: '#007bff',
+    },
+    button: {
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        backgroundColor: '#007bff',
+        color: 'white',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 15,
+        fontWeight: 'bold',
     },
 });
 
