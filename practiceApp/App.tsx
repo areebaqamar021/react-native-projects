@@ -1,27 +1,50 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './src/practice/HomeScreen';
-import ComponentScreen from './src/practice/ComponentScreen';
-import ListScreen from './src/practice/ListScreen';
-// import { useNavigation } from '@react-navigation/native';
+import QuizScreen from './src/quizApp/QuizScreen';
+import ResultsScreen from './src/quizApp/ResultsScreen';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  // const navigation = useNavigation();
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="Component" component={ComponentScreen} />
-        <Stack.Screen name="List" component={ListScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Quiz">
+                <Stack.Screen name="Quiz" component={QuizScreen} />
+                <Stack.Screen name="Results" component={ResultsScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 };
 
 export default App;
+
+
+
+// import React from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import HomeScreen from './src/practice/HomeScreen';
+// import ComponentScreen from './src/practice/ComponentScreen';
+// import ListScreen from './src/practice/ListScreen';
+// // import { useNavigation } from '@react-navigation/native';
+
+// const Stack = createNativeStackNavigator();
+
+// const App = () => {
+//   // const navigation = useNavigation();
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+//         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+//         <Stack.Screen name="Component" component={ComponentScreen} />
+//         <Stack.Screen name="List" component={ListScreen} />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// };
+
+// export default App;
 
 // import React from 'react';
 // import { NavigationContainer } from '@react-navigation/native';
