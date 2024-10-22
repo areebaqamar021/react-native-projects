@@ -4,12 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/practice/HomeScreen';
 import ComponentScreen from './src/practice/ComponentScreen';
 import ListScreen from './src/practice/ListScreen';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
