@@ -16,10 +16,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        backgroundColor: '#c2e9fb',
     },
     title: {
         fontSize: 24,
         marginBottom: 20,
+        color: '#007bff',
     },
 });
 
