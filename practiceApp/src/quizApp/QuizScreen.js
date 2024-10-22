@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 
 const questions = [
     {
@@ -51,25 +51,45 @@ const QuizScreen = ({ navigation }) => {
         <View style={styles.container}>
             <Text style={styles.question}>{currentQuestion.question}</Text>
             {currentQuestion.options.map((option) => (
-                <Button
+                <TouchableOpacity
                     key={option}
-                    title={option}
                     onPress={() => handleAnswer(option)}
-                />
+                    style={{ width: 100, padding: 10, backgroundColor: '#007BFF', borderRadius: 5, marginBottom: 10 }}
+                >
+                    <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>{option}</Text>
+                </TouchableOpacity>
+
             ))}
             {showResult && (
-                <Text style={[styles.result, { color: selectedAnswer === currentQuestion.answer ? 'green' : 'red' }]}>
+                <Text
+                    style={[
+                        styles.result,
+                        { color: selectedAnswer === currentQuestion.answer ? 'green' : 'red' }
+                    ]}
+                >
                     {selectedAnswer === currentQuestion.answer
                         ? "Correct!"
                         : "Wrong! The correct answer is " + currentQuestion.answer}
                 </Text>
             )}
             {currentQuestionIndex < questions.length - 1 && showResult && (
-                <Button title="Next Question" onPress={handleNextQuestion} />
+                <TouchableOpacity
+                    onPress={handleNextQuestion}
+                    style={{ padding: 10, backgroundColor: '#007BFF', borderRadius: 5, marginVertical: 10 }}
+                >
+                    <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold', fontSize: 17 }}>Next Question</Text>
+                </TouchableOpacity>
             )}
+
             {currentQuestionIndex === questions.length - 1 && showResult && (
-                <Button title="Finish Quiz" onPress={() => navigation.navigate('Results')} />
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Results')}
+                    style={{ padding: 10, backgroundColor: '#28A745', borderRadius: 5, marginVertical: 10 }}
+                >
+                    <Text style={{ color: '#fff', textAlign: 'center',fontWeight: 'bold', fontSize: 17 }}>Finish Quiz</Text>
+                </TouchableOpacity>
             )}
+
         </View>
     );
 };
@@ -80,14 +100,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        backgroundColor: '#c2e9fb',
     },
     question: {
-        fontSize: 20,
+        fontSize: 23,
+        fontWeight: 'bold',
         marginBottom: 20,
     },
     result: {
-        fontSize: 16,
-        marginTop: 20,
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginVertical: 10,
+        textAlign: 'center',
     },
 });
 
