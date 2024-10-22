@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/practice/HomeScreen';
 import ComponentScreen from './src/practice/ComponentScreen';
 import ListScreen from './src/practice/ListScreen';
-
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
