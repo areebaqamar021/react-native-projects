@@ -5,7 +5,7 @@ const ResultsScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Quiz Finished!</Text>
-            <Button title="Back to Quiz" onPress={() => navigation.navigate('Quiz')} />
+            <Button title="Back to Quiz" onPress={() => navigation.navigate('Start')} />
         </View>
     );
 };

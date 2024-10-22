@@ -3,13 +3,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import QuizScreen from './src/quizApp/QuizScreen';
 import ResultsScreen from './src/quizApp/ResultsScreen';
+import StartScreen from './src/quizApp/StartScreen';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Quiz">
+            <Stack.Navigator initialRouteName="Start">
+            <Stack.Screen name="Start" component={StartScreen} />
                 <Stack.Screen name="Quiz" component={QuizScreen} />
                 <Stack.Screen name="Results" component={ResultsScreen} />
             </Stack.Navigator>
