@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Header from '../components/Header'
 
-const Main = () => {
+const Slider = () => {
   return (
     <View>
-      <Header />
+      <Text>Slider</Text>
     </View>
   )
 }
 
-export default Main
+export default Slider
 
 const styles = StyleSheet.create({})
