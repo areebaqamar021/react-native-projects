@@ -1,76 +1,53 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import React from 'react';
+import { View, Image, StyleSheet, Dimensions } from 'react-native';
+import Swiper from 'react-native-swiper'
 
-const { width: viewportWidth } = Dimensions.get('window');
-
-const images = [
-  require('../assets/Image.png'),
+const data = [
+    require('../assets/Image.png'),
+    require('../assets/Image.png'),
+    require('../assets/Image.png'),
+    require('../assets/Image.png'),
 ];
+const {width} = Dimensions.get("screen")
 
 const Slider = () => {
-  const carouselRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const renderItem = ({ item }) => {
     return (
-      <Image source={item} style={styles.image} resizeMode="cover" />
+        <View style={{ height:150 }}>
+            <Swiper styles={styles.container}
+            dot={<View style={{backgroundColor:'rgba(0,0,0,.2)', width: 20, height: 1, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />}
+            activeDot={<View style={{backgroundColor:'#007aff', width: 20, height: 1, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />}
+            >
+                {
+                    data.map((item, index) => {
+                        return <Image style={{
+                            width:width*0.9,
+                            marginHorizontal:width*0.05,
+                            borderRadius:10,
+                            marginTop:10,
+                            height:100
+                        }} source={item} />
+                    })
+                }
+            </Swiper>
+        </View>
     );
-  };
-
-  return (
-    <View style={styles.container}>
-      <Carousel
-        layout="default"
-        ref={carouselRef}
-        data={images}
-        renderItem={renderItem}
-        sliderWidth={viewportWidth}
-        itemWidth={viewportWidth}
-        onSnapToItem={(index) => setActiveIndex(index)}
-      />
-      <View style={styles.indicatorContainer}>
-        {images.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.indicatorLine,
-              index === activeIndex ? styles.activeIndicator : styles.inactiveIndicator,
-            ]}
-          />
-        ))}
-      </View>
-    </View>
-  );
-};
-
+}
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width: viewportWidth,
-    height: 200,
-  },
-  indicatorContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
-  indicatorLine: {
-    width: 20,
-    height: 5,
-    marginHorizontal: 5,
-    borderRadius: 3,
-  },
-  activeIndicator: {
-    backgroundColor: 'blue',
-  },
-  inactiveIndicator: {
-    backgroundColor: 'lightgray',
-  },
+    container: {
+        backgroundColor:'green',
+        width
+    },
+    item: {
+        borderRadius: 10,
+        height: 250,
+        overflow: 'hidden',
+        marginLeft: 25,
+        marginRight: 25,
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
 });
 
 export default Slider;
