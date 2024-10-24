@@ -1,14 +1,74 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import React from 'react'
 
 const Categories = () => {
   return (
     <View>
-      <Text>Categories</Text>
+      <View style={styles.category}>
+        <Text style={styles.deals}>Category</Text>
+        <TouchableOpacity>
+          <Text style={styles.more}> View more   > </Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        CategoryData={[
+          {
+            name: 'category 1',
+            image: require('../assets/category1.png')
+          },
+          {
+            name: 'category 2',
+            image: require('../assets/category1.png')
+          },
+          {
+            name: 'category 3',
+            image: require('../assets/category1.png')
+          },
+          {
+            name: 'category 4',
+            image: require('../assets/category1.png')
+          },
+          {
+            name: 'category 5',
+            image: require('../assets/category1.png')
+          },
+          {
+            name: 'category 6',
+            image: require('../assets/category1.png')
+          },
+          {
+            name: 'category 7',
+            image: require('../assets/category1.png')
+          },
+          {
+            name: 'category 8',
+            image: require('../assets/category1.png')
+          },
+        ]}
+        renderItem={({ item, index }) => {
+          <View key={index} style={styles.itemContainer}>
+            <Text style={styles.name}>{item.name}</Text>
+            <Image source={item.image} style={styles.image} />
+          </View>
+        }}
+      />
     </View>
   )
 }
 
 export default Categories
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  category: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+},
+deals: {
+  fontSize: 15,
+  fontWeight: 'bold',
+},
+more: {
+  color: '#1A94FF',
+},
+})

@@ -1,19 +1,31 @@
 import { View, StyleSheet, Text, Image } from 'react-native'
 import React from 'react'
 
-const ProductCard = () => {
-  return (
-    <View style={styles.container}>
-        <Image 
-        style={styles.img}
-        source={require('../assets/product.png')}/>
-        <Text style={styles.text}>Product Name</Text>
-        <Image 
-        style={styles.icon}
-        source={require('../assets/ratingDisplay.png')}
-        resizeMode='contain'/>
-    </View>
-  )
+const ProductCard = ({ item }) => {
+    return (
+        <View style={styles.container}>
+            <Image
+                style={styles.img}
+                source={
+                    {
+                        uri: item.image
+                    }
+                } />
+            <Text style={styles.text}>{item.name}</Text>
+            <View style={styles.rating}>
+                {[1,1,1,1,1].map((item1, index)=>{
+                    return <Image
+                    style={{
+                        ...styles.icon,
+                        tintColor: item.rating > index ? undefined : '#ccc'
+                    }}
+                    source={require('../assets/star.png')}
+                    resizeMode='contain' />
+                })}
+                <Text>{item.reviewCount}</Text>
+            </View>
+        </View>
+    )
 }
 
 export default ProductCard
@@ -21,7 +33,6 @@ export default ProductCard
 const styles = StyleSheet.create({
     container: {
         width: 120,
-        height: 120,
         margin: 10,
     },
     text: {
@@ -33,7 +44,10 @@ const styles = StyleSheet.create({
         marginBottom: 7,
     },
     icon: {
-        width: 100,
-        height: 30,
+        width: 20,
+        height: 20,
+    },
+    rating: {
+        flexDirection: 'row',
     }
 })
