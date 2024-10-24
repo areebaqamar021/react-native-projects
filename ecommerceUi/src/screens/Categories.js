@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image } from 'react-native'
 import React from 'react'
 
 const Categories = () => {
@@ -11,7 +11,8 @@ const Categories = () => {
         </TouchableOpacity>
       </View>
       <FlatList
-        CategoryData={[
+        columnWrapperStyle={{ justifyContent: 'space-evenly', marginBottom: 30 }}
+        data={[
           {
             name: 'category 1',
             image: require('../assets/category1.png')
@@ -46,11 +47,13 @@ const Categories = () => {
           },
         ]}
         renderItem={({ item, index }) => {
-          <View key={index} style={styles.itemContainer}>
-            <Text style={styles.name}>{item.name}</Text>
+
+          return <View key={index} style={styles.itemContainer}>
             <Image source={item.image} style={styles.image} />
+            <Text style={styles.name}>{item.name}</Text>
           </View>
         }}
+        numColumns={4}
       />
     </View>
   )
@@ -63,12 +66,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
-},
-deals: {
-  fontSize: 15,
-  fontWeight: 'bold',
-},
-more: {
-  color: '#1A94FF',
-},
+    marginBottom: 15
+  },
+  deals: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  more: {
+    color: '#1A94FF',
+  },
+  image: {
+    width: 55,
+    height: 55,
+    marginBottom: 7,
+  }
+
 })

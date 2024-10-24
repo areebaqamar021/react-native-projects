@@ -1,11 +1,11 @@
 import { View, StyleSheet, Text, Image } from 'react-native'
 import React from 'react'
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item, imageStyles = {} }) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container]}>
             <Image
-                style={styles.img}
+                style={[styles.img, imageStyles]}
                 source={
                     {
                         uri: item.image
@@ -32,7 +32,7 @@ export default ProductCard
 
 const styles = StyleSheet.create({
     container: {
-        width: 120,
+       
         margin: 10,
     },
     text: {
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         width: 120,
         height: 120,
         marginBottom: 7,
+        borderRadius: 9
     },
     icon: {
         width: 20,
