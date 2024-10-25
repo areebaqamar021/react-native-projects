@@ -19,7 +19,9 @@ const Slider = () => {
             >
                 {
                     data.map((item, index) => {
-                        return <Image style={{
+                        return <Image 
+                        key={index}
+                        style={{
                             width:width*0.9,
                             marginHorizontal:width*0.05,
                             borderRadius:10,
