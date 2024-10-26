@@ -13,14 +13,14 @@ const ProductCard = ({ item, imageStyles = {} }) => {
                 } />
             <Text style={styles.text}>{item.name}</Text>
             <View style={styles.rating}>
-                {[1,1,1,1,1].map((item1, index)=>{
+                {[1, 1, 1, 1, 1].map((item1, index) => {
                     return <Image
-                    style={{
-                        ...styles.icon,
-                        tintColor: item.rating > index ? undefined : '#ccc'
-                    }}
-                    source={require('../assets/star.png')}
-                    resizeMode='contain' />
+                        style={{
+                            ...styles.icon,
+                            tintColor: item.rating > index ? undefined : '#ccc'
+                        }}
+                        source={require('../assets/star.png')}
+                        resizeMode='contain' />
                 })}
                 <Text>{item.reviewCount}</Text>
             </View>
@@ -32,7 +32,6 @@ export default ProductCard
 
 const styles = StyleSheet.create({
     container: {
-       
         margin: 10,
     },
     text: {
@@ -50,5 +49,6 @@ const styles = StyleSheet.create({
     },
     rating: {
         flexDirection: 'row',
+        
     }
 })
