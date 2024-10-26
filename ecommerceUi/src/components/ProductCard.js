@@ -19,7 +19,6 @@ const ProductCard = ({ item, imageStyles = {} }) => {
                         ...styles.icon,
                         tintColor: item.rating > index ? undefined : '#ccc'
                     }}
-                    source={require('../assets/star.png')}
                     resizeMode='contain' />
                 })}
                 <Text>{item.reviewCount}</Text>
