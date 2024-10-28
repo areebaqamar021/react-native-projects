@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import Main from './Main'
 
 const Home = () => {
   return (
     <View>
-      <Text>Home</Text>
+      
     </View>
   )
 }

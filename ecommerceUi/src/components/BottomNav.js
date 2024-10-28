@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
@@ -14,7 +14,7 @@ const BottomNav = () => {
         <NavigationContainer>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
-                    tabBarIcon: () => {
+                    tabBarIcon: ({ focused }) => {
                         let iconSource;
 
                         switch (route.name) {
@@ -34,9 +34,14 @@ const BottomNav = () => {
                                 iconSource = require('../assets/icons/home.png');
                         }
 
-                        return <Image source={iconSource} style={styles.icon} />;
+                        return (
+                            <View style={styles.iconContainer}>
+                                <Image source={iconSource} style={[styles.icon, focused && styles.iconFocused]} />
+                            </View>
+                        );
                     },
-                    tabBarActiveTintColor: 'tomato',
+                    tabBarLabel: route.name,
+                    tabBarActiveTintColor: '#1A94FF',
                     tabBarInactiveTintColor: 'gray',
                 })}
             >
@@ -50,14 +55,17 @@ const BottomNav = () => {
 };
 
 const styles = StyleSheet.create({
-    screenContainer: {
-        flex: 1,
+    iconContainer: {
         justifyContent: 'center',
         alignItems: 'center',
+        marginHorizontal: 10, 
     },
     icon: {
         width: 24,
         height: 24,
+    },
+    iconFocused: {
+        tintColor: '#1A94FF',
     },
 });
 
