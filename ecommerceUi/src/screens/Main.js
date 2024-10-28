@@ -10,7 +10,7 @@ const Main = () => {
     return (
         <ScrollView style={{ flex: 1 }} >
             <View style={{ backgroundColor: '#fff'}}>
-                <Header />
+                <Header shopName='Shop Name'/>
                 <Slider />
                 <View style={styles.view}>
                     <Text style={styles.deals}>Hot Deals</Text>

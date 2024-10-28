@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-const Header = () => {
+const Header = ({ shopName }) => {
   return (
     <View style={styles.headerContainer}>
-      <Text style={styles.shopName}>Shop name</Text>
+      <Text style={styles.shopName}>{shopName}</Text>
       <View style={styles.iconContainer}>
         <TouchableOpacity>
           <Image 
