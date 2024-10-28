@@ -9,15 +9,15 @@ import ProductList from './ProductList'
 const Main = () => {
     return (
         <ScrollView style={{ flex: 1 }} >
-            <Header />
-            <Slider />
-            <View style={styles.view}>
-                <Text style={styles.deals}>Hot Deals</Text>
-                <TouchableOpacity>
-                    <Text style={styles.more}> View more   > </Text>
-                </TouchableOpacity>
-            </View>
-            <View>
+            <View style={{ backgroundColor: '#fff'}}>
+                <Header />
+                <Slider />
+                <View style={styles.view}>
+                    <Text style={styles.deals}>Hot Deals</Text>
+                    <TouchableOpacity>
+                        <Text style={styles.more}> View more   > </Text>
+                    </TouchableOpacity>
+                </View>
                 <FlatList
                     contentContainerStyle={{ alignSelf: 'flex-start' }}
                     data={[
@@ -59,11 +59,11 @@ const Main = () => {
                         },
                     ]}
                     renderItem={({ item, index }) => {
-                        return <ProductCard item = {item}/>
+                        return <ProductCard item={item} />
                     }}
                     horizontal={true}
                 />
-                </View>
+            </View>
             <Categories />
             <ProductList />
         </ScrollView>
