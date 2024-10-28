@@ -52,7 +52,7 @@ const ProductList = () => {
                         },
                     ]}
                     renderItem={({ item, index }) => {
-                        return <ProductCard item = {item} imageStyles={{
+                        return <ProductCard item = {item} key={index} imageStyles={{
                                 width: 175,
                                 height: 175,
                                 marginBottom: 7,

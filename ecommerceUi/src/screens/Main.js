@@ -59,7 +59,7 @@ const Main = () => {
                         },
                     ]}
                     renderItem={({ item, index }) => {
-                        return <ProductCard item={item} />
+                        return <ProductCard key={index} item={item} />
                     }}
                     horizontal={true}
                 />

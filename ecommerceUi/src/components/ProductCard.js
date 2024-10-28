@@ -19,6 +19,7 @@ const ProductCard = ({ item, imageStyles = {} }) => {
                             ...styles.icon,
                             tintColor: item.rating > index ? undefined : '#ccc'
                         }}
+                        key={index}
                         source={require('../assets/star.png')}
                         resizeMode='contain' />
                 })}

@@ -15,6 +15,7 @@ const BottomNav = () => {
         <NavigationContainer>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
+                    headerShown: false,
                     tabBarIcon: ({ focused }) => {
                         let iconSource;
 
