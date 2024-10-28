@@ -5,7 +5,7 @@ import Main from './Main'
 const Home = () => {
   return (
     <View>
-      
+     
     </View>
   )
 }

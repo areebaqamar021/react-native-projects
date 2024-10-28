@@ -6,6 +6,7 @@ import Home from '../screens/Home';
 import Search from '../screens/Search';
 import Categories from '../screens/Categories';
 import Profile from '../screens/Profile';
+import Main from '../screens/Main';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +46,7 @@ const BottomNav = () => {
                     tabBarInactiveTintColor: 'gray',
                 })}
             >
-                <Tab.Screen name="Home" component={Home} />
+                <Tab.Screen name="Main" component={Main} />
                 <Tab.Screen name="Search" component={Search} />
                 <Tab.Screen name="Categories" component={Categories} />
                 <Tab.Screen name="Profile" component={Profile} />
