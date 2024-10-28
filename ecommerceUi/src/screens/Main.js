@@ -64,8 +64,12 @@ const Main = () => {
                     horizontal={true}
                 />
             </View>
-            <Categories />
+            <View style={{backgroundColor: '#fff', marginTop: 8}}>
+            <Categories/>
+            </View>
+            <View style={{backgroundColor: '#fff', marginTop: 8, marginBottom: 8}}>
             <ProductList />
+            </View>
         </ScrollView>
     )
 }
