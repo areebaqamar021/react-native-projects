@@ -46,7 +46,7 @@ const BottomNav = () => {
                     tabBarInactiveTintColor: 'gray',
                 })}
             >
-                <Tab.Screen name="Main" component={Main} />
+                <Tab.Screen name="Home" component={Main} />
                 <Tab.Screen name="Search" component={Search} />
                 <Tab.Screen name="Categories" component={Categories} />
                 <Tab.Screen name="Profile" component={Profile} />
