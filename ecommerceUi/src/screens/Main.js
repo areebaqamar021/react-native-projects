@@ -5,6 +5,7 @@ import Slider from '../components/Slider'
 import ProductCard from '../components/ProductCard'
 import Categories from './Categories'
 import ProductList from './ProductList'
+import BottomNav from '../components/BottomNav'
 
 const Main = () => {
     return (
@@ -66,6 +67,7 @@ const Main = () => {
                 </View>
             <Categories />
             <ProductList />
+            <BottomNav />
         </ScrollView>
     )
 }
