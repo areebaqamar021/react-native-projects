@@ -1,7 +1,7 @@
 import { StyleSheet, Image, View, TextInput, Text, TouchableOpacity, ScrollView, FlatList } from 'react-native'
 import React from 'react'
 import Header from '../components/Header';
-import ProductList from './ProductList';
+import ProductList from '../components/ProductList';
 
 const Search = () => {
   dummyData = [

@@ -3,8 +3,8 @@ import React from 'react'
 import Header from '../components/Header'
 import Slider from '../components/Slider'
 import ProductCard from '../components/ProductCard'
-import Categories from './Categories'
-import ProductList from './ProductList'
+import Categories from '../components/Categories'
+import ProductList from '../components/ProductList'
 
 const Home = () => {
     return (

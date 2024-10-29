@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
-import ProductCard from '../components/ProductCard';
+import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
+import ProductCard from './ProductCard';
 import React from 'react'
+import ProductDetail from '../screens/ProductDetail';
 
 const ProductList = () => {
   return (
@@ -46,12 +47,12 @@ const ProductList = () => {
                         },
                     ]}
                     renderItem={({ item, index }) => {
-                        return <ProductCard item = {item} key={index} imageStyles={{
+                        return <TouchableOpacity onPress={ProductDetail}><ProductCard item = {item} key={index} imageStyles={{
                                 width: 175,
                                 height: 175,
                                 marginBottom: 7,
                                 backgroundColor: 'red'
-                        }}/>
+                        }}/></TouchableOpacity>
                     }}
                     scrollEnabled={false}
                     numColumns={2}
@@ -62,18 +63,4 @@ const ProductList = () => {
 
 export default ProductList
 
-const styles = StyleSheet.create({
-    view: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: 10,
-    },
-    deals: {
-        fontSize: 15,
-        fontWeight: 'bold',
-    },
-    more: {
-        color: '#1A94FF',
-    },
-})
+const styles = StyleSheet.create({})
