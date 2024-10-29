@@ -88,7 +88,6 @@ const Search = () => {
           }
         ]}
         renderItem={({ item, index }) => {
-
           return <View key={index}>
             <Image source={item.image} style={styles.image} />
             <Text>{item.name}</Text>
@@ -97,6 +96,9 @@ const Search = () => {
         numColumns={4}
         />
       </View>
+        <View style={styles.products}>
+          <Text style={styles.text}>Popular Product</Text>
+        </View>
     </ScrollView>
   )
 }
@@ -160,11 +162,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 10,
     marginTop : 10,
-    marginBottom: 15
+    marginBottom: 10
   },
   image: {
     width: 55,
     height: 55,
     marginBottom: 7,
+  },
+  products: {
+    backgroundColor: '#fff',
+    justifyContent: 'space-between',
+    padding: 10,
+    marginBottom: 15
   }
 })

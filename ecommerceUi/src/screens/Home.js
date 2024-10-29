@@ -68,6 +68,12 @@ const Home = () => {
             <Categories/>
             </View>
             <View style={{backgroundColor: '#fff', marginTop: 8, marginBottom: 8}}>
+            <View style={styles.view}>
+                <Text style={styles.deals}>Product list</Text>
+                <TouchableOpacity>
+                    <Text style={styles.more}> View more   > </Text>
+                </TouchableOpacity>
+            </View>
             <ProductList />
             </View>
         </ScrollView>

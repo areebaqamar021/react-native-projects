@@ -5,12 +5,6 @@ import React from 'react'
 const ProductList = () => {
   return (
     <View>
-      <View style={styles.view}>
-                <Text style={styles.deals}>Product list</Text>
-                <TouchableOpacity>
-                    <Text style={styles.more}> View more   > </Text>
-                </TouchableOpacity>
-            </View>
             <FlatList
                     contentContainerStyle={{ alignSelf: 'flex-start' }}
                     data={[

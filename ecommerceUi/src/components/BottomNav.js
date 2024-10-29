@@ -3,9 +3,9 @@ import { StyleSheet, Image, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Search from '../screens/Search';
-import Categories from '../screens/Categories';
 import Profile from '../screens/Profile';
 import Home from '../screens/Home';
+import Category from '../screens/Category';
 
 const Tab = createBottomTabNavigator();
 
@@ -48,7 +48,7 @@ const BottomNav = () => {
             >
                 <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Search" component={Search} />
-                <Tab.Screen name="Categories" component={Categories} />
+                <Tab.Screen name="Category" component={Category} />
                 <Tab.Screen name="Profile" component={Profile} />
             </Tab.Navigator>
         </NavigationContainer>

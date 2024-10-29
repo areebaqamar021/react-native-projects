@@ -1,11 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image } from 'react-native'
 import React from 'react'
-import Header from '../components/Header'
 
 const Categories = () => {
   return (
     <View>
-      <Header shopName={'Category'}/>
       <View style={styles.category}>
         <Text style={styles.deals}>Category</Text>
         <TouchableOpacity>
