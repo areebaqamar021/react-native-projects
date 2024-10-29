@@ -1,6 +1,7 @@
 import { StyleSheet, Image, View, TextInput, Text, TouchableOpacity, ScrollView, FlatList } from 'react-native'
 import React from 'react'
 import Header from '../components/Header';
+import ProductList from './ProductList';
 
 const Search = () => {
   dummyData = [
@@ -97,7 +98,8 @@ const Search = () => {
         />
       </View>
         <View style={styles.products}>
-          <Text style={styles.text}>Popular Product</Text>
+          <Text style={styles.productsText}>Popular Product</Text>
+          <ProductList />
         </View>
     </ScrollView>
   )
@@ -169,10 +171,12 @@ const styles = StyleSheet.create({
     height: 55,
     marginBottom: 7,
   },
+  productsText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    margin: 10,
+  },
   products: {
     backgroundColor: '#fff',
-    justifyContent: 'space-between',
-    padding: 10,
-    marginBottom: 15
   }
 })
