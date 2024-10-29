@@ -10,7 +10,8 @@ const ProductCard = ({ item, imageStyles = {} }) => {
                     {
                         uri: item.image
                     }
-                } />
+                } 
+                />
             <Text style={styles.text}>{item.name}</Text>
             <View style={styles.rating}>
                 {[1, 1, 1, 1, 1].map((item1, index) => {

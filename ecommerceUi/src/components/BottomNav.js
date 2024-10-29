@@ -2,11 +2,10 @@ import React from 'react';
 import { StyleSheet, Image, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../screens/Home';
 import Search from '../screens/Search';
 import Categories from '../screens/Categories';
 import Profile from '../screens/Profile';
-import Main from '../screens/Main';
+import Home from '../screens/Home';
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +46,7 @@ const BottomNav = () => {
                     tabBarInactiveTintColor: 'gray',
                 })}
             >
-                <Tab.Screen name="Home" component={Main} />
+                <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Search" component={Search} />
                 <Tab.Screen name="Categories" component={Categories} />
                 <Tab.Screen name="Profile" component={Profile} />
