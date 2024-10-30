@@ -5,6 +5,7 @@ import Slider from '../components/Slider'
 import ProductCard from '../components/ProductCard'
 import Categories from '../components/Categories'
 import ProductList from '../components/ProductList'
+import ProductDetail from './ProductDetail'
 
 const Home = () => {
     return (
@@ -59,7 +60,7 @@ const Home = () => {
                         },
                     ]}
                     renderItem={({ item, index }) => {
-                        return <ProductCard key={index} item={item} />
+                        return <TouchableOpacity onPress={ProductDetail}><ProductCard key={index} item={item} /></TouchableOpacity>
                     }}
                     horizontal={true}
                 />

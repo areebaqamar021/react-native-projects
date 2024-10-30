@@ -2,16 +2,28 @@ import React from 'react';
 import { StyleSheet, Image, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Search from '../screens/Search';
 import Profile from '../screens/Profile';
 import Home from '../screens/Home';
 import Category from '../screens/Category';
+import ProductDetail from '../screens/ProductDetail';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const BottomNav = () => {
     return (
-        <NavigationContainer>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
+                    <Stack.Screen name="productDetails" component={ProductDetail} options={{ headerShown: false }} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
+    };
+    const TabNavigator = () => {
+        return (    
             <Tab.Navigator
                 screenOptions={({ route }) => ({
                     headerShown: false,
@@ -51,7 +63,6 @@ const BottomNav = () => {
                 <Tab.Screen name="Category" component={Category} />
                 <Tab.Screen name="Profile" component={Profile} />
             </Tab.Navigator>
-        </NavigationContainer>
     );
 };
 
