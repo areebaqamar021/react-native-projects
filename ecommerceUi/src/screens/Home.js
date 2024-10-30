@@ -3,11 +3,14 @@ import React from 'react'
 import Header from '../components/Header'
 import Slider from '../components/Slider'
 import ProductCard from '../components/ProductCard'
+import { useNavigation } from '@react-navigation/native';
 import Categories from '../components/Categories'
 import ProductList from '../components/ProductList'
-import ProductDetail from './ProductDetail'
+
 
 const Home = () => {
+    const navigation = useNavigation();
+
     return (
         <ScrollView style={{ flex: 1 }} >
             <View style={{ backgroundColor: '#fff'}}>
@@ -60,7 +63,7 @@ const Home = () => {
                         },
                     ]}
                     renderItem={({ item, index }) => {
-                        return <TouchableOpacity onPress={ProductDetail}><ProductCard key={index} item={item} /></TouchableOpacity>
+                        return <TouchableOpacity onPress={() => navigation.navigate('productDetails',{item})}><ProductCard key={index} item={item} /></TouchableOpacity>
                     }}
                     horizontal={true}
                 />
