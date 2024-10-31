@@ -118,7 +118,7 @@ const ProductDetail = ({ route }) => {
                 </View>
             </ScrollView>
             <View style={styles.buttons}>
-                <TouchableOpacity style={styles.add}>
+                <TouchableOpacity style={styles.add} onPress={() => navigation.navigate('Cart')}>
                     <Text style={{ color: '#1A94FF' }}>Add to Cart</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.buy}>
