@@ -8,6 +8,7 @@ import Profile from '../screens/Profile';
 import Home from '../screens/Home';
 import Category from '../screens/Category';
 import ProductDetail from '../screens/ProductDetail';
+import Cart from '../screens/Cart';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -18,6 +19,7 @@ const BottomNav = () => {
                 <Stack.Navigator>
                     <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
                     <Stack.Screen name="productDetails" component={ProductDetail} options={{ headerShown: false }} />
+                    <Stack.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
                 </Stack.Navigator>
             </NavigationContainer>
         );
