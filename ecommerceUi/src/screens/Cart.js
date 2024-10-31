@@ -10,7 +10,7 @@ const Cart = () => {
             <Header
                 shopName={
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('productDetails')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                             <Image source={require('../assets/back.png')}
                                 resizeMode='contain'
                                 style={styles.backIcon} />
@@ -19,7 +19,7 @@ const Cart = () => {
                 }
             />
             <ScrollView>
-            <Text style={{ fontSize: 17, fontWeight: 'bold', marginTop: 10, marginLeft: 10 }}>Shipping Details</Text>
+                <Text style={{ fontSize: 17, fontWeight: 'bold', marginTop: 10, marginLeft: 10 }}>Shipping Details</Text>
                 <View style={styles.shippingContainer}>
                     <View style={styles.address}>
                         <View>
@@ -45,18 +45,21 @@ const Cart = () => {
                                 source={require('../assets/more.png')} /></TouchableOpacity>
                     </View>
                     <View style={styles.service}>
-                    <View style={{ flexDirection: 'row' }}><Image
-                        source={require('../assets/tiki.png')}
-                        resizeMode='contain'
-                        style={{
-                            width: 20,
-                            height: 20, marginRight: 10,
-                        }} />
-                        <Text style={{ fontSize: 15, marginBottom: 10 }}>Shipping Service</Text>
-                        <Text >Tiki Now</Text>
-                        <Text>2h - 3h</Text>
-                        </View>
-                        </View>
+                        <View style={{ flexDirection: 'row' }}><Image
+                            source={require('../assets/tiki.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 20,
+                                height: 20, marginRight: 10,
+                            }} />
+                            <Text style={{ fontSize: 15, marginBottom: 8 }}>Shipping Service</Text></View>
+                        <Text style={{ fontWeight: 'bold', marginLeft: 30, marginBottom: 6 }}>Tiki Now</Text>
+                        <Text style={{marginLeft: 30, color: '#808089'}}>2h - 3h</Text>
+                    </View>
+                </View>
+                <Text style={{ fontSize: 17, fontWeight: 'bold', marginLeft: 10 }}>Order Details</Text>
+                <View>
+                    
                 </View>
             </ScrollView>
         </View>
@@ -87,9 +90,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         margin: 20
     },
-    service:{
-        flexDirection: 'row',
+    service: {
         justifyContent: 'space-between',
         marginLeft: 30,
+        marginBottom: 20,
     }
 })
