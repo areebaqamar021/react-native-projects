@@ -54,12 +54,29 @@ const Cart = () => {
                             }} />
                             <Text style={{ fontSize: 15, marginBottom: 8 }}>Shipping Service</Text></View>
                         <Text style={{ fontWeight: 'bold', marginLeft: 30, marginBottom: 6 }}>Tiki Now</Text>
-                        <Text style={{marginLeft: 30, color: '#808089'}}>2h - 3h</Text>
+                        <Text style={{ marginLeft: 30, color: '#808089' }}>2h - 3h</Text>
                     </View>
                 </View>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', marginLeft: 10 }}>Order Details</Text>
-                <View>
-                    
+                <View style={styles.shippingContainer}>
+                    <View style={styles.details}>
+                        <Image
+                            source={(require('../assets/image1.png'))}
+                            resizeMode='contain'
+                            style={{
+                                width: 40,
+                                height: 40, marginRight: 10,
+                            }}
+                        />
+                        <View style={{ flexDirection: 'column', }}>
+                            <Text style={{ marginBottom: 5 }}>Product Detail</Text>
+                            <Text style={{ fontWeight: 'bold' }}>X0.000 ₫</Text></View>
+                    </View>
+                    <View style={{flexDirection: 'row', marginLeft: 70}}>
+                        <Text style={styles.buttons}>-</Text>
+                        <Text style={styles.buttons}>0</Text>
+                        <Text style={styles.buttons}>+</Text>
+                    </View>
                 </View>
             </ScrollView>
         </View>
@@ -94,5 +111,16 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft: 30,
         marginBottom: 20,
+    },
+    details: {
+        flexDirection: 'row',
+        margin: 20,
+        marginBottom: 20,
+    },
+    buttons: {
+        borderWidth: 1,
+        padding: 10,
+        width: 40,
+        textAlign: 'center',
     }
 })
