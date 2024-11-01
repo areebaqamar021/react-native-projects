@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
     address: {
         borderBottomWidth: 1,
         borderColor: '#ccc',
-        // padding: 12,
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 20
@@ -210,22 +209,18 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
       },
       label: {
-        fontSize: 16,
         color: '#333',
       },
       value: {
-        fontSize: 16,
         color: '#000',
       },
       promotionValue: {
         color: 'green',
       },
       totalLabel: {
-        fontSize: 18,
         fontWeight: 'bold',
       },
       totalValue: {
-        fontSize: 18,
         fontWeight: 'bold',
         color: '#000',
       },
