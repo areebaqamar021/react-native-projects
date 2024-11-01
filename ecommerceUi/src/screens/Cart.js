@@ -4,11 +4,17 @@ import Header from '../components/Header';
 import React, { useState } from 'react';
 
 const Cart = () => {
-    const [count, setCount] = useState(0);
+    const [count1, setCount1] = useState(0);
+    const [count2, setCount2] = useState(0);
     const navigation = useNavigation();
-    const handleIncrement = () => setCount(count + 1);
-    const handleDecrement = () => setCount(count > 0 ? count - 1 : 0);
-    const handleReset = () => setCount(0);
+
+    const handleIncrement1 = () => setCount1(count1 + 1);
+    const handleDecrement1 = () => setCount1(count1 > 0 ? count1 - 1 : 0);
+    const handleReset1 = () => setCount1(0);
+
+    const handleIncrement2 = () => setCount2(count2 + 1);
+    const handleDecrement2 = () => setCount2(count2 > 0 ? count2 - 1 : 0);
+    const handleReset2 = () => setCount2(0);
 
     return (
         <View style={styles.container}>
@@ -77,13 +83,13 @@ const Cart = () => {
                             <Text style={{ marginBottom: 5 }}>Product Detail</Text>
                             <Text style={{ fontWeight: 'bold' }}>X0.000 ₫</Text>
                             <View style={{ flexDirection: 'row', marginTop: 7, marginBottom: 15 }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={handleDecrement1}>
                                     <Text style={styles.button1}>-</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Text style={styles.button2}>0</Text>
+                                <TouchableOpacity onPress={handleReset1}>
+                                    <Text style={styles.button2}>{count1}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={handleIncrement1}>
                                     <Text style={styles.button3}>+</Text>
                                 </TouchableOpacity>
                             </View>
@@ -102,13 +108,13 @@ const Cart = () => {
                             <Text style={{ marginBottom: 5 }}>Product Detail</Text>
                             <Text style={{ fontWeight: 'bold' }}>X0.000 ₫</Text>
                             <View style={{ flexDirection: 'row', marginTop: 7, marginBottom: 15 }}>
-                                <TouchableOpacity onPress={handleDecrement}>
+                                <TouchableOpacity onPress={handleDecrement2}>
                                     <Text style={styles.button1}>-</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={handleReset}>
-                                    <Text style={styles.button2}>{count}</Text>
+                                <TouchableOpacity onPress={handleReset2}>
+                                    <Text style={styles.button2}>{count2}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={handleIncrement}>
+                                <TouchableOpacity onPress={handleIncrement2}>
                                     <Text style={styles.button3}>+</Text>
                                 </TouchableOpacity>
                             </View>
