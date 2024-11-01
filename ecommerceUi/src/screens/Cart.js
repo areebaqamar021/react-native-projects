@@ -122,13 +122,18 @@ const Cart = () => {
                             <Text style={styles.label}>Promotion</Text>
                             <Text style={[styles.value, styles.promotionValue]}>-00.000 đ</Text>
                         </View>
-                        <View style={styles.row}>
+                        <View style={[styles.row, styles.totalRow]}>
                             <Text style={styles.totalLabel}>Total</Text>
                             <Text style={styles.totalValue}>00.000 đ</Text>
                         </View>
                     </View>
                 </View>
             </ScrollView>
+            <View style={styles.buttons}>
+                <TouchableOpacity style={styles.buy}>
+                    <Text style={{ color: '#fff' }}>Buy Now</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -167,6 +172,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 15,
     },
+    buttons: {
+        padding: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: '#fff'
+    },
     button1: {
         borderWidth: 1,
         padding: 10,
@@ -199,29 +210,42 @@ const styles = StyleSheet.create({
     },
     containerPrice: {
         padding: 16,
-      },
-      row: {
+    },
+    row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 4,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         paddingBottom: 8,
-      },
-      label: {
+    },
+    buy: {
+        borderWidth: 1,
+        borderRadius: 40,
+        width: 370,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#1A94FF',
+        borderColor: '#fff',
+        padding: 10,
+    },
+    label: {
         color: '#333',
-      },
-      value: {
+    },
+    value: {
         color: '#000',
-      },
-      promotionValue: {
+    },
+    promotionValue: {
         color: 'green',
-      },
-      totalLabel: {
+    },
+    totalLabel: {
         fontWeight: 'bold',
-      },
-      totalValue: {
+    },
+    totalValue: {
         fontWeight: 'bold',
         color: '#000',
-      },
+    },
+    totalRow: {
+        borderBottomWidth: 0,
+    },
 })
