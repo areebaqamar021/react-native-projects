@@ -70,13 +70,46 @@ const Cart = () => {
                         />
                         <View style={{ flexDirection: 'column', }}>
                             <Text style={{ marginBottom: 5 }}>Product Detail</Text>
-                            <Text style={{ fontWeight: 'bold' }}>X0.000 ₫</Text></View>
+                            <Text style={{ fontWeight: 'bold' }}>X0.000 ₫</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 7, marginBottom: 15 }}>
+                                <TouchableOpacity>
+                                    <Text style={styles.button1}>-</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={styles.button2}>0</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={styles.button3}>+</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
-                    <View style={{flexDirection: 'row', marginLeft: 70}}>
-                        <Text style={styles.buttons}>-</Text>
-                        <Text style={styles.buttons}>0</Text>
-                        <Text style={styles.buttons}>+</Text>
+                    <View style={styles.details1}>
+                        <Image
+                            source={(require('../assets/Image2.png'))}
+                            resizeMode='contain'
+                            style={{
+                                width: 40,
+                                height: 40, marginRight: 10,
+                            }}
+                        />
+                        <View style={{ flexDirection: 'column', }}>
+                            <Text style={{ marginBottom: 5 }}>Product Detail</Text>
+                            <Text style={{ fontWeight: 'bold' }}>X0.000 ₫</Text>
+                            <View style={{ flexDirection: 'row', marginTop: 7, marginBottom: 15 }}>
+                                <TouchableOpacity>
+                                    <Text style={styles.button1}>-</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={styles.button2}>0</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text style={styles.button3}>+</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
+                    
                 </View>
             </ScrollView>
         </View>
@@ -113,14 +146,45 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     details: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
         flexDirection: 'row',
         margin: 20,
-        marginBottom: 20,
     },
-    buttons: {
+    details1:{
+        flexDirection: 'row',
+        marginLeft: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    button1: {
         borderWidth: 1,
         padding: 10,
         width: 40,
         textAlign: 'center',
-    }
+        marginRight: 4,
+        borderColor: '#DDDDE3',
+        color: '#DDDDE3',
+        borderRadius: 5,
+    },
+    button2: {
+        borderWidth: 1,
+        padding: 10,
+        width: 40,
+        textAlign: 'center',
+        marginRight: 4,
+        borderColor: '#ccc',
+        color: '#ccc',
+        borderRadius: 5,
+    },
+    button3: {
+        borderWidth: 1,
+        padding: 10,
+        width: 40,
+        textAlign: 'center',
+        marginRight: 4,
+        borderColor: '#1A94FF',
+        color: '#1A94FF',
+        borderRadius: 5,
+    },
 })
