@@ -84,7 +84,7 @@ const Cart = () => {
                             </View>
                         </View>
                     </View>
-                    <View style={styles.details1}>
+                    <View style={styles.details}>
                         <Image
                             source={(require('../assets/Image2.png'))}
                             resizeMode='contain'
@@ -149,13 +149,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         flexDirection: 'row',
-        margin: 20,
-    },
-    details1:{
-        flexDirection: 'row',
-        marginLeft: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        margin: 15,
     },
     button1: {
         borderWidth: 1,
