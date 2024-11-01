@@ -1,10 +1,15 @@
 import { StyleSheet, TouchableOpacity, View, Image, Text, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
-import React from 'react';
+import React, { useState } from 'react';
 
 const Cart = () => {
+    const [count, setCount] = useState(0);
     const navigation = useNavigation();
+    const handleIncrement = () => setCount(count + 1);
+    const handleDecrement = () => setCount(count > 0 ? count - 1 : 0);
+    const handleReset = () => setCount(0);
+
     return (
         <View style={styles.container}>
             <Header
@@ -97,13 +102,13 @@ const Cart = () => {
                             <Text style={{ marginBottom: 5 }}>Product Detail</Text>
                             <Text style={{ fontWeight: 'bold' }}>X0.000 ₫</Text>
                             <View style={{ flexDirection: 'row', marginTop: 7, marginBottom: 15 }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={handleDecrement}>
                                     <Text style={styles.button1}>-</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Text style={styles.button2}>0</Text>
+                                <TouchableOpacity onPress={handleReset}>
+                                    <Text style={styles.button2}>{count}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={handleIncrement}>
                                     <Text style={styles.button3}>+</Text>
                                 </TouchableOpacity>
                             </View>
@@ -131,7 +136,7 @@ const Cart = () => {
             </ScrollView>
             <View style={styles.buttons}>
                 <TouchableOpacity style={styles.buy}>
-                    <Text style={{ color: '#fff' }}>Buy Now</Text>
+                    <Text style={{ color: '#fff', fontSize: 18 }}>Pay 00.000 ₫</Text>
                 </TouchableOpacity>
             </View>
         </View>
