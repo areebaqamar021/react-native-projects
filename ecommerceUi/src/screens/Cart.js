@@ -109,7 +109,24 @@ const Cart = () => {
                             </View>
                         </View>
                     </View>
-                    
+                    <View style={styles.containerPrice}>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Price</Text>
+                            <Text style={styles.value}>00.000 đ</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Shipping fee</Text>
+                            <Text style={styles.value}>00.000 đ</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Promotion</Text>
+                            <Text style={[styles.value, styles.promotionValue]}>-00.000 đ</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.totalLabel}>Total</Text>
+                            <Text style={styles.totalValue}>00.000 đ</Text>
+                        </View>
+                    </View>
                 </View>
             </ScrollView>
         </View>
@@ -181,4 +198,35 @@ const styles = StyleSheet.create({
         color: '#1A94FF',
         borderRadius: 5,
     },
+    containerPrice: {
+        padding: 16,
+      },
+      row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 4,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingBottom: 8,
+      },
+      label: {
+        fontSize: 16,
+        color: '#333',
+      },
+      value: {
+        fontSize: 16,
+        color: '#000',
+      },
+      promotionValue: {
+        color: 'green',
+      },
+      totalLabel: {
+        fontSize: 18,
+        fontWeight: 'bold',
+      },
+      totalValue: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#000',
+      },
 })
