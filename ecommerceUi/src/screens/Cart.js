@@ -126,7 +126,17 @@ const Cart = () => {
                             <Text style={styles.value}>00.000 đ</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={styles.label}>Shipping fee</Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.label}>Shipping fee</Text>
+                                <Image
+                                    source={(require('../assets/fee.png'))}
+                                    resizeMode='contain'
+                                    style={{
+                                        width: 15,
+                                        height: 15, marginLeft: 4,
+                                    }}
+                                />
+                            </View>
                             <Text style={styles.value}>00.000 đ</Text>
                         </View>
                         <View style={styles.row}>
