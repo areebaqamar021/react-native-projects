@@ -126,7 +126,7 @@ const Cart = () => {
                             <Text style={styles.value}>00.000 đ</Text>
                         </View>
                         <View style={styles.row}>
-                            <View style={{flexDirection: 'row'}}>
+                            <View style={{ flexDirection: 'row' }}>
                                 <Text style={styles.label}>Shipping fee</Text>
                                 <Image
                                     source={(require('../assets/fee.png'))}
@@ -150,10 +150,37 @@ const Cart = () => {
                     </View>
                 </View>
             </ScrollView>
-            <View style={styles.buttons}>
-                <TouchableOpacity style={styles.buy}>
-                    <Text style={{ color: '#fff', fontSize: 18 }}>Pay 00.000 ₫</Text>
-                </TouchableOpacity>
+            <View style={styles.bottom}>
+                <View style={styles.bottomBar}>
+                    <View style={{ flexDirection: 'row' }}>
+
+                        <Image
+                            source={(require('../assets/coupon.png'))}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25, marginRight: 8,
+                            }}
+                        />
+
+                        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 2 }}>Apply coupon here</Text>
+                    </View>
+                    <TouchableOpacity>
+                        <Image
+                            source={(require('../assets/more.png'))}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25, marginRight: 10,
+                            }}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ padding: 15, }}>
+                    <TouchableOpacity style={styles.buy}>
+                        <Text style={{ color: '#fff', fontSize: 18 }}>Pay 00.000 ₫</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )
@@ -193,11 +220,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 15,
     },
-    buttons: {
-        padding: 15,
+    bottom: {
+        backgroundColor: '#fff',
+    },
+    bottomBar: {
+        padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '#fff'
+        borderWidth: 1,
+        borderColor: '#EBEBF0',
     },
     button1: {
         borderWidth: 1,
