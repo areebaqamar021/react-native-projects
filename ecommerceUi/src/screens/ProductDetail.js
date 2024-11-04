@@ -96,18 +96,22 @@ const ProductDetail = ({ route }) => {
                 </View>
                 <View style={styles.shippingContainer}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 10, }}>Descriptions</Text>
-                    <View style={styles.desription}>
-                        <View>
-                            <Text style={{ marginBottom: 10 }}>Made In</Text>
-                            <Text style={{ marginBottom: 10 }}>Size</Text>
-                            <Text style={{ marginBottom: 10 }}>Color</Text>
-                            <Text style={{ marginBottom: 10 }}>Materail</Text>
+                    <View style={styles.containerPrice}>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Made In</Text>
+                            <Text style={styles.value}>Vietnam</Text>
                         </View>
-                        <View>
-                            <Text style={{ marginBottom: 10 }}>Vietnam</Text>
-                            <Text style={{ marginBottom: 10 }}>S</Text>
-                            <Text style={{ marginBottom: 10 }}>Blue</Text>
-                            <Text style={{ marginBottom: 10 }}>Spandex</Text>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Size</Text>
+                            <Text style={styles.value}>S</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Color</Text>
+                            <Text style={[styles.value, styles.promotionValue]}>Blue</Text>
+                        </View>
+                        <View style={[styles.row, styles.totalRow]}>
+                            <Text style={styles.totalLabel}>Material</Text>
+                            <Text style={styles.totalValue}>Spandex</Text>
                         </View>
                     </View>
                     <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing augue nisl, gravida a, sapien leo. Morbi vulputate fermentum porta nunc. Viverra laoreet convallis massa elementum vel. Eget tincidunt massa sodales non massa euismod.</Text>
@@ -214,5 +218,35 @@ const styles = StyleSheet.create({
         padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
-    }
+    },
+    containerPrice: {
+        padding: 16,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 4,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingBottom: 8,
+    },
+    label: {
+        color: '#333',
+    },
+    value: {
+        color: '#000',
+    },
+    promotionValue: {
+        color: 'green',
+    },
+    totalLabel: {
+        fontWeight: 'bold',
+    },
+    totalValue: {
+        fontWeight: 'bold',
+        color: '#000',
+    },
+    totalRow: {
+        borderBottomWidth: 0,
+    },
 })
