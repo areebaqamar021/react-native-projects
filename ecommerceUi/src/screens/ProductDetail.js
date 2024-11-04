@@ -96,7 +96,7 @@ const ProductDetail = ({ route }) => {
                 </View>
                 <View style={styles.shippingContainer}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 10, }}>Descriptions</Text>
-                    <View style={styles.containerPrice}>
+                    <View style={styles.containerDescription}>
                         <View style={styles.row}>
                             <Text style={styles.label}>Made In</Text>
                             <Text style={styles.value}>Vietnam</Text>
@@ -107,11 +107,11 @@ const ProductDetail = ({ route }) => {
                         </View>
                         <View style={styles.row}>
                             <Text style={styles.label}>Color</Text>
-                            <Text style={[styles.value, styles.promotionValue]}>Blue</Text>
+                            <Text style={styles.value}>Blue</Text>
                         </View>
-                        <View style={[styles.row, styles.totalRow]}>
-                            <Text style={styles.totalLabel}>Material</Text>
-                            <Text style={styles.totalValue}>Spandex</Text>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Material</Text>
+                            <Text style={styles.value}>Spandex</Text>
                         </View>
                     </View>
                     <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing augue nisl, gravida a, sapien leo. Morbi vulputate fermentum porta nunc. Viverra laoreet convallis massa elementum vel. Eget tincidunt massa sodales non massa euismod.</Text>
@@ -219,8 +219,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    containerPrice: {
-        padding: 16,
+    containerDescription: {
+        padding: 10,
     },
     row: {
         flexDirection: 'row',
@@ -235,18 +235,7 @@ const styles = StyleSheet.create({
     },
     value: {
         color: '#000',
-    },
-    promotionValue: {
-        color: 'green',
-    },
-    totalLabel: {
         fontWeight: 'bold',
-    },
-    totalValue: {
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    totalRow: {
-        borderBottomWidth: 0,
+
     },
 })
