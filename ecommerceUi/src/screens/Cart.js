@@ -134,7 +134,7 @@ const Cart = () => {
                             <Text style={[styles.value, styles.promotionValue]}>-00.000 đ</Text>
                         </View>
                         <View style={[styles.row, styles.totalRow]}>
-                            <Text style={styles.totalLabel}>Total</Text>
+                            <Text style={styles.label}>Total</Text>
                             <Text style={styles.totalValue}>00.000 đ</Text>
                         </View>
                     </View>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         height: 18,
     },
     shippingContainer: {
-        margin: 20,
+        margin: 10,
         borderRadius: 8,
         backgroundColor: '#fff',
     },
@@ -248,9 +248,6 @@ const styles = StyleSheet.create({
     },
     promotionValue: {
         color: 'green',
-    },
-    totalLabel: {
-        fontWeight: 'bold',
     },
     totalValue: {
         fontWeight: 'bold',

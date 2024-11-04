@@ -114,7 +114,7 @@ const ProductDetail = ({ route }) => {
                             <Text style={styles.value}>Spandex</Text>
                         </View>
                     </View>
-                    <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing augue nisl, gravida a, sapien leo. Morbi vulputate fermentum porta nunc. Viverra laoreet convallis massa elementum vel. Eget tincidunt massa sodales non massa euismod.</Text>
+                    <Text style={{margin: 10}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing augue nisl, gravida a, sapien leo. Morbi vulputate fermentum porta nunc. Viverra laoreet convallis massa elementum vel. Eget tincidunt massa sodales non massa euismod.</Text>
                 </View>
                 <View style={{ backgroundColor: '#fff', marginTop: 10, }}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold', marginBottom: 10, marginLeft: 10, marginTop: 10 }}>Similar Product</Text>
