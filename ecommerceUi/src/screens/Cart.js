@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginRight: 4,
         borderColor: '#DDDDE3',
-        color: '#DDDDE3',
+        color: '#ccc',
         borderRadius: 5,
     },
     button2: {
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginRight: 4,
         borderColor: '#ccc',
-        color: '#ccc',
+        color: '#000',
         borderRadius: 5,
     },
     button3: {
