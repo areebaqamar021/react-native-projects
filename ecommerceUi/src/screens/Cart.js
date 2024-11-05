@@ -10,11 +10,9 @@ const Cart = () => {
 
     const handleIncrement1 = () => setCount1(count1 + 1);
     const handleDecrement1 = () => setCount1(count1 > 0 ? count1 - 1 : 0);
-    const handleReset1 = () => setCount1(0);
 
     const handleIncrement2 = () => setCount2(count2 + 1);
     const handleDecrement2 = () => setCount2(count2 > 0 ? count2 - 1 : 0);
-    const handleReset2 = () => setCount2(0);
 
     return (
         <View style={styles.container}>
@@ -86,7 +84,7 @@ const Cart = () => {
                                 <TouchableOpacity onPress={handleDecrement1}>
                                     <Text style={styles.button1}>-</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={handleReset1}>
+                                <TouchableOpacity>
                                     <Text style={styles.button2}>{count1}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={handleIncrement1}>
@@ -111,7 +109,7 @@ const Cart = () => {
                                 <TouchableOpacity onPress={handleDecrement2}>
                                     <Text style={styles.button1}>-</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={handleReset2}>
+                                <TouchableOpacity>
                                     <Text style={styles.button2}>{count2}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={handleIncrement2}>
