@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc'
   },
   icon1: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
   },
   category: {
     backgroundColor: '#fff',
