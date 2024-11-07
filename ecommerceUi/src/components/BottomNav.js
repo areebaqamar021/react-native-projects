@@ -42,7 +42,7 @@ const BottomNav = () => {
                             case 'Category':
                                 iconSource = require('../assets/icons/grid.png');
                                 break;
-                            case 'Profile':
+                            case 'My Account':
                                 iconSource = require('../assets/icons/account.png');
                                 break;
                             default:
@@ -63,7 +63,7 @@ const BottomNav = () => {
                 <Tab.Screen name="Home" component={Home} />
                 <Tab.Screen name="Category" component={Category} />
                 <Tab.Screen name="Search" component={Search} />
-                <Tab.Screen name="Profile" component={MyAccount} />
+                <Tab.Screen name="My Account" component={MyAccount} />
             </Tab.Navigator>
     );
 };
