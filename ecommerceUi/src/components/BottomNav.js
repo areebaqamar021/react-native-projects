@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Search from '../screens/Search';
-import Profile from '../screens/Profile';
+import MyAccount from '../screens/MyAccount';
 import Home from '../screens/Home';
 import Category from '../screens/Category';
 import ProductDetail from '../screens/ProductDetail';
@@ -61,9 +61,9 @@ const BottomNav = () => {
                 })}
             >
                 <Tab.Screen name="Home" component={Home} />
-                <Tab.Screen name="Search" component={Search} />
                 <Tab.Screen name="Category" component={Category} />
-                <Tab.Screen name="Profile" component={Profile} />
+                <Tab.Screen name="Search" component={Search} />
+                <Tab.Screen name="Profile" component={MyAccount} />
             </Tab.Navigator>
     );
 };
