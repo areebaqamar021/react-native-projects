@@ -15,56 +15,56 @@ const Stack = createNativeStackNavigator();
 
 const BottomNav = () => {
     return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
-                <Stack.Screen name="productDetails" component={ProductDetail} options={{ headerShown: false }} />
-                <Stack.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
-};
-const TabNavigator = () => {
-    return (
-        <Tab.Navigator
-            screenOptions={({ route }) => ({
-                headerShown: false,
-                tabBarIcon: ({ focused }) => {
-                    let iconSource;
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
+                    <Stack.Screen name="productDetails" component={ProductDetail} options={{ headerShown: false }} />
+                    <Stack.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
+    };
+    const TabNavigator = () => {
+        return (    
+            <Tab.Navigator
+                screenOptions={({ route }) => ({
+                    headerShown: false,
+                    tabBarIcon: ({ focused }) => {
+                        let iconSource;
 
-                    switch (route.name) {
-                        case 'Home':
-                            iconSource = require('../assets/icons/home.png');
-                            break;
-                        case 'Category':
-                            iconSource = require('../assets/icons/grid.png');
-                            break;
-                        case 'Search':
-                            iconSource = require('../assets/icons/search.png');
-                            break;
-                        case 'Profile':
-                            iconSource = require('../assets/icons/account.png');
-                            break;
-                        default:
-                            iconSource = require('../assets/icons/home.png');
-                    }
+                        switch (route.name) {
+                            case 'Home':
+                                iconSource = require('../assets/icons/home.png');
+                                break;
+                            case 'Search':
+                                iconSource = require('../assets/icons/search.png');
+                                break;
+                            case 'Category':
+                                iconSource = require('../assets/icons/grid.png');
+                                break;
+                            case 'Profile':
+                                iconSource = require('../assets/icons/account.png');
+                                break;
+                            default:
+                                iconSource = require('../assets/icons/home.png');
+                        }
 
-                    return (
-                        <View style={styles.iconContainer}>
-                            <Image source={iconSource} style={[styles.icon, focused && styles.iconFocused]} />
-                        </View>
-                    );
-                },
-                tabBarLabel: route.name,
-                tabBarActiveTintColor: '#1A94FF',
-                tabBarInactiveTintColor: 'gray',
-            })}
-        >
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Search" component={Search} />
-            <Tab.Screen name="Category" component={Category} />
-            <Tab.Screen name="Profile" component={Profile} />
-        </Tab.Navigator>
+                        return (
+                            <View style={styles.iconContainer}>
+                                <Image source={iconSource} style={[styles.icon, focused && styles.iconFocused]} />
+                            </View>
+                        );
+                    },
+                    tabBarLabel: route.name,
+                    tabBarActiveTintColor: '#1A94FF',
+                    tabBarInactiveTintColor: 'gray',
+                })}
+            >
+                <Tab.Screen name="Home" component={Home} />
+                <Tab.Screen name="Search" component={Search} />
+                <Tab.Screen name="Category" component={Category} />
+                <Tab.Screen name="Profile" component={Profile} />
+            </Tab.Navigator>
     );
 };
 
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     iconContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginHorizontal: 10,
+        marginHorizontal: 10, 
     },
     icon: {
         width: 24,
