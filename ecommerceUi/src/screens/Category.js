@@ -7,7 +7,7 @@ const Category = () => {
     <View>
         <Header shopName={'Category'}/>
         <View>
-            
+            <Text>Category</Text>
         </View>
     </View>
   )
